@@ -31,3 +31,7 @@ version: "3"
             - 8081:8081
         depends_on:
             - resolver
+    resolver:
+        image: identifiersorg/cloud-ws-resolver
+        ports:
+            - 8080:8080

@@ -5,6 +5,7 @@
 #														#
 
 version: "3"
+services:
     metadata:
         image: identifiersorg/cloud-ws-metadata
         environment:

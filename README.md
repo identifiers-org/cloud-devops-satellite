@@ -15,4 +15,4 @@ Documentation for developers will be coming soon, through the repository Wiki.
 
 
 ### Contact
-TODO
+Manuel Bernal Llinares

@@ -3,3 +3,6 @@ This repository contains recipes for the deployment of [__identifiers.org__](htt
 
 # Platforms
 Deployment recipes can be found organized by platform under the _platform_ folder of this repository.
+
+## Docker Compose based deployments
+TODO

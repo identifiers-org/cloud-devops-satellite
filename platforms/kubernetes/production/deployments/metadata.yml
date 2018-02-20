@@ -18,3 +18,12 @@ spec:
                 environment: production
                 tier: api
                 app: metadata
+        spec:
+            containers:
+                - name: cloud-ws-metadata
+                  image: identifiersorg/cloud-ws-metadata
+                  resources:
+                      requests:
+                          memory: 1Gi
+                  ports:
+                  - containerPort: 8082

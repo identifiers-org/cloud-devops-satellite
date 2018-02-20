@@ -4,7 +4,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: resolver
+    name: metadata
 spec:
     selector:
         matchLabels:
@@ -25,10 +25,5 @@ spec:
                   resources:
                       requests:
                           memory: 1Gi
-                  env:
-                  - name: WS_METADATA_CONFIG_RESOLVER_HOST
-                    value: resolver
-                  - name: WS_METADATA_CONFIG_RESOLVER_PORT
-                    value: 8080
                   ports:
                   - containerPort: 8082

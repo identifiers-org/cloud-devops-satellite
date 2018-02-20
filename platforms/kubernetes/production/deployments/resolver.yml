@@ -18,4 +18,12 @@ spec:
                 environment: production
                 tier: api
                 app: resolver
-        
+        spec:
+            containers:
+                - name: cloud-ws-resolver
+                  image: identifiersorg/cloud-ws-resolver
+                  resources:
+                      requests:
+                          memory: 1Gi
+                  ports:
+                  - containerPort: 8080

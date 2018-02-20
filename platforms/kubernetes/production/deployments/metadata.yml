@@ -20,10 +20,15 @@ spec:
                 app: metadata
         spec:
             containers:
-                - name: cloud-ws-metadata
-                  image: identifiersorg/cloud-ws-metadata
-                  resources:
-                      requests:
-                          memory: 1Gi
-                  ports:
-                  - containerPort: 8082
+            - name: cloud-ws-metadata
+              image: identifiersorg/cloud-ws-metadata
+              resources:
+                  requests:
+                      memory: 1Gi
+              env:
+              - name: WS_METADATA_CONFIG_RESOLVER_HOST
+                value: resolver
+              - name: WS_METADATA_CONFIG_RESOLVER_PORT
+                value: 8080
+              ports:
+              - containerPort: 8082

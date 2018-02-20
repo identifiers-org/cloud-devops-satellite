@@ -8,4 +8,7 @@ metadata:
 spec:
     selector:
         matchLabels:
+            environment: production
+            tier: api
+            app: resolver
             

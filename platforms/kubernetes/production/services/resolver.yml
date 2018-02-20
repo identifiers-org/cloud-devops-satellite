@@ -1,7 +1,7 @@
 # Kubernetes declaration of Identifiers.org Resolver Deployment
 #
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
-apiVersion: apps/v1
+apiVersion: v1
 kind: Service
 metadata:
     name: resolver

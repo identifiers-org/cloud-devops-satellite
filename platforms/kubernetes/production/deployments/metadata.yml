@@ -6,3 +6,8 @@ kind: Deployment
 metadata:
     name: resolver
 spec:
+    selector:
+        matchLabels:
+            environment: production
+            tier: api
+            app: metadata

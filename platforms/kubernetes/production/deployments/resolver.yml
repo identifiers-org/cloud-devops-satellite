@@ -11,4 +11,5 @@ spec:
             environment: production
             tier: api
             app: resolver
-            
+    replicas: 2
+    

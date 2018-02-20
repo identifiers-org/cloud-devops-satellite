@@ -9,3 +9,10 @@ metadata:
         environment: production
         tier: api
         app: metadata
+spec:
+    ports:
+    - port: 8082
+    selector:
+        environment: production
+        tier: api
+        app: metadata

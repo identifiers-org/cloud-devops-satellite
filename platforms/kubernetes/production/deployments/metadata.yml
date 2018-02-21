@@ -24,7 +24,7 @@ spec:
                   image: identifiersorg/cloud-ws-metadata
                   resources:
                       requests:
-                          memory: 1Gi
+                          memory: 1048Mi
                   env:
                   - name: WS_METADATA_CONFIG_RESOLVER_HOST
                     value: "resolver"

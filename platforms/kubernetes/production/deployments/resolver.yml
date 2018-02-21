@@ -24,6 +24,6 @@ spec:
                   image: identifiersorg/cloud-ws-resolver
                   resources:
                       requests:
-                          memory: 1Gi
+                          memory: 1048Mi
                   ports:
                   - containerPort: 8080

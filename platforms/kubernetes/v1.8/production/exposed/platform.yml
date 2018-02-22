@@ -2,3 +2,6 @@
 #
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: platform-endpoint

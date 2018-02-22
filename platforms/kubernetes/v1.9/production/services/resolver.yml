@@ -1,0 +1,18 @@
+# Kubernetes declaration of Identifiers.org Resolver Deployment
+#
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: v1
+kind: Service
+metadata:
+    name: resolver
+    labels:
+        environment: production
+        tier: api
+        app: resolver
+spec:
+    ports:
+    - port: 8080
+    selector:
+        environment: production
+        tier: api
+        app: resolver

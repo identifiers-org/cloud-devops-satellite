@@ -1,0 +1,34 @@
+# Kubernetes deployment description for Identifiers.org Metadata Resolution Service
+#
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: metadata
+spec:
+    selector:
+        matchLabels:
+            environment: production
+            tier: api
+            app: metadata
+    replicas: 2
+    template:
+        metadata:
+            labels:
+                environment: production
+                tier: api
+                app: metadata
+        spec:
+            containers:
+                - name: cloud-ws-metadata
+                  image: identifiersorg/cloud-ws-metadata
+                  resources:
+                      requests:
+                          memory: 1048Mi
+                  env:
+                  - name: WS_METADATA_CONFIG_RESOLVER_HOST
+                    value: "resolver"
+                  - name: WS_METADATA_CONFIG_RESOLVER_PORT
+                    value: "8080"
+                  ports:
+                  - containerPort: 8082

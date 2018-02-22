@@ -1,3 +1,4 @@
 # This is the external Load Balancer that presents Identifiers.org satellite deployment to the internet
 #
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: extensions/v1beta1

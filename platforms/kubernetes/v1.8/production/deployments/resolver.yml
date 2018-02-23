@@ -22,6 +22,7 @@ spec:
             containers:
                 - name: cloud-ws-resolver
                   image: identifiersorg/cloud-ws-resolver
+                  imagePullPolicy: Always
                   resources:
                       requests:
                           memory: 1048Mi

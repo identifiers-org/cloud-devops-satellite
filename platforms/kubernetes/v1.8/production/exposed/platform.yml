@@ -6,6 +6,10 @@ kind: Ingress
 metadata:
     name: platform-ingress
 spec:
-    backend:
-        serviceName: resolver
-        servicePort: 8080
+    rules:
+    - host: resolver.api.a.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: resolver
+                  servicePort: 8080

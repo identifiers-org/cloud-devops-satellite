@@ -7,7 +7,13 @@ metadata:
     name: platform-ingress
 spec:
     rules:
-    - host: resolver.api.a.identifiers.org
+    - host: resolver.api.aws.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: resolver
+                  servicePort: 8080
+    - host: resolver.api.gcloud.identifiers.org
       http:
           paths:
               - backend:

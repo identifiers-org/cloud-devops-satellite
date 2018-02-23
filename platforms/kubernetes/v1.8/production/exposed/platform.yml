@@ -5,3 +5,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
     name: platform-endpoint
+spec:
+    backend:
+        serviceName: metadata
+        servicePort: 8082

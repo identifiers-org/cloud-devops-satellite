@@ -13,3 +13,9 @@ spec:
               - backend:
                   serviceName: resolver
                   servicePort: 8080
+    - host: resolver.api.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: resolver
+                  servicePort: 8080

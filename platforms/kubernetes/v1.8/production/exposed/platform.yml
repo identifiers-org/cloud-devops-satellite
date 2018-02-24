@@ -45,3 +45,22 @@ spec:
               - backend:
                   serviceName: metadata
                   servicePort: 8082
+    # Registry Service rules
+    - host: registry.api.aws.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: registry
+                  servicePort: 8081
+    - host: registry.api.gcloud.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: registry
+                  servicePort: 8081
+    - host: registry.api.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: registry
+                  servicePort: 8081

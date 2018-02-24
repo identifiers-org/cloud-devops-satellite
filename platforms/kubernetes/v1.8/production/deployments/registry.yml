@@ -35,6 +35,8 @@ spec:
                     value: "email-smtp.us-east-1.amazonaws.com"
                   - name: WS_REGISTRY_CONFIG_EMAIL_PORT
                     value: "587"
+                  - name: WS_REGISTRY_CONFIG_EMAIL_FROM
+                    value: "identifiers.org@gmail.com"
                   - name: WS_REGISTRY_CONFIG_EMAIL_USERNAME
                     valueFrom:
                         secretKeyRef:

@@ -1,0 +1,57 @@
+# Kubernetes deployment description for Identifiers.org Prefix Registration Service
+#
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+    name: registry
+spec:
+    selector:
+        matchLabels:
+            environment: production
+            tier: api
+            app: registry
+    replicas: 1
+    template:
+        metadata:
+            labels:
+                environment: production
+                tier: api
+                app: registry
+        spec:
+            containers:
+                - name: cloud-ws-registry
+                  image: identifiersorg/cloud-ws-registry:0.1.0
+                  imagePullPolicy: Always
+                  resources:
+                      requests:
+                          memory: 1048Mi
+                  env:
+                  - name: WS_REGISTRY_CONFIG_RESOLVER_HOST
+                    value: "resolver"
+                  - name: WS_REGISTRY_CONFIG_RESOLVER_PORT
+                    value: "8080"
+                  - name: WS_REGISTRY_CONFIG_EMAIL_HOST
+                    value: "email-smtp.us-east-1.amazonaws.com"
+                  - name: WS_REGISTRY_CONFIG_EMAIL_PORT
+                    value: "587"
+                  - name: WS_REGISTRY_CONFIG_EMAIL_USERNAME
+                    valueFrom:
+                        secretKeyRef:
+                            name: aws-smtp-credentials
+                            key: username
+                  - name: WS_REGISTRY_CONFIG_EMAIL_PASSWORD
+                    valueFrom:
+                        secretKeyRef:
+                            name: aws-smtp-credentials
+                            key: password
+                  - name: WS_REGISTRY_CONFIG_EMAIL_TRANSPORT_PROTOCOL
+                    value: "smtp"
+                  - name: WS_REGISTRY_CONFIG_EMAIL_BOOLEAN_SMTP_AUTH
+                    value: "true"
+                  - name: WS_REGISTRY_CONFIG_EMAIL_BOOLEAN_START_TLS
+                    value: "true"
+                  - name: WS_REGISTRY_CONFIG_EMAIL_BOOLEAN_DEBUG
+                    value: "true"
+                  ports:
+                  - containerPort: 8081

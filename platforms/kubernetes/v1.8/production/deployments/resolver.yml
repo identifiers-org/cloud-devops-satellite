@@ -21,7 +21,7 @@ spec:
         spec:
             containers:
                 - name: cloud-ws-resolver
-                  image: identifiersorg/cloud-ws-resolver:v0.1
+                  image: identifiersorg/cloud-ws-resolver:0.1.3
                   imagePullPolicy: Always
                   resources:
                       requests:

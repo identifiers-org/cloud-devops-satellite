@@ -1,3 +1,11 @@
 # Definition of Redis backend service for Identifiers.org
 #
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: v1
+kind: Service
+metadata:
+    name: redis
+    labels:
+        environment: production
+        tier: backend
+        app: redis

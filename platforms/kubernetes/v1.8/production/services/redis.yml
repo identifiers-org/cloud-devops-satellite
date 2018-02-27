@@ -9,3 +9,10 @@ metadata:
         environment: production
         tier: backend
         app: redis
+spec:
+    ports:
+    - port: 6379
+    selector:
+        environment: production
+        tier: backend
+        app: redis

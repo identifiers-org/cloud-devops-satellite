@@ -26,5 +26,10 @@ spec:
                   resources:
                       requests:
                           memory: 1048Mi
+                  env:
+                  - name: WS_RESOLVER_CONFIG_REDIS_HOST
+                    value: "redis"
+                  - name: WS_RESOLVER_CONFIG_REDIS_PORT
+                    value: "6379"
                   ports:
                   - containerPort: 8080

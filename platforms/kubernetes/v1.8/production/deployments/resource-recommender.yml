@@ -18,3 +18,13 @@ spec:
                 environment: production
                 tier: api
                 app: resource-recommender
+        spec:
+            containers:
+                - name: cloud-ws-resource-recommender
+                  image: identifiersorg/cloud-ws-resource-recommender:0.1.1
+                  imagePullPolicy: Always
+                  resources:
+                      requests:
+                          memory: 1048Mi
+                  ports:
+                  - containerPort: 8083

@@ -5,3 +5,9 @@ apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
     name: resource-recommender
+spec:
+    selector:
+        matchLabels:
+            environment: production
+            tier: api
+            app: resource-recommender

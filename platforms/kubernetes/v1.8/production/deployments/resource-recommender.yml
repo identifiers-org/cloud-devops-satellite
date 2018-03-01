@@ -11,3 +11,4 @@ spec:
             environment: production
             tier: api
             app: resource-recommender
+    replicas: 1

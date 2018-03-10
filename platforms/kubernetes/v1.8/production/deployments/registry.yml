@@ -56,6 +56,6 @@ spec:
                   - name: WS_REGISTRY_CONFIG_EMAIL_BOOLEAN_DEBUG
                     value: "true"
                   - name: WS_REGISTRY_JVM_MEMORY_MAX
-                    value: "1024m"
+                    value: "512m"
                   ports:
                   - containerPort: 8081

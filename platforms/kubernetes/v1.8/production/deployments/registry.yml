@@ -25,7 +25,7 @@ spec:
                   imagePullPolicy: Always
                   resources:
                       requests:
-                          memory: 1048Mi
+                          memory: 640Mi
                   env:
                   - name: WS_REGISTRY_CONFIG_RESOLVER_HOST
                     value: "resolver"

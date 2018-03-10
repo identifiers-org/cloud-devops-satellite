@@ -25,7 +25,7 @@ spec:
                   imagePullPolicy: Always
                   resources:
                       requests:
-                          memory: 1048Mi
+                          memory: 640Mi
                   env:
                   - name: WS_RESOLVER_CONFIG_REDIS_HOST
                     value: "redis"

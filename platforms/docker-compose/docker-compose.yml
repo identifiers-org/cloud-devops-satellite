@@ -7,7 +7,7 @@
 version: "3"
 services:
     metadata:
-        image: identifiersorg/cloud-ws-metadata
+        image: identifiersorg/cloud-ws-metadata:1.0.1
         environment:
             - WS_METADATA_CONFIG_RESOLVER_HOST=resolver
             - WS_METADATA_CONFIG_RESOLVER_PORT=8080
@@ -17,7 +17,7 @@ services:
         depends_on:
             - resolver
     registry:
-        image: identifiersorg/cloud-ws-registry
+        image: identifiersorg/cloud-ws-registry:1.0.0
         environment:
             - WS_REGISTRY_CONFIG_RESOLVER_HOST=resolver
             - WS_REGISTRY_CONFIG_RESOLVER_PORT=8080
@@ -36,7 +36,7 @@ services:
         depends_on:
             - resolver
     resolver:
-        image: identifiersorg/cloud-ws-resolver
+        image: identifiersorg/cloud-ws-resolver:1.0.1
         environment:
             - WS_RESOLVER_CONFIG_REDIS_HOST=redis
             - WS_RESOLVER_CONFIG_REDIS_PORT=6379
@@ -53,7 +53,7 @@ services:
         ports:
             - 6379:6379
     recommender:
-        image: identifiersorg/cloud-ws-resource-recommender
+        image: identifiersorg/cloud-ws-resource-recommender:1.0.0
         environment:
             - WS_RESOURCE_RECOMMENDER_JVM_MEMORY_MAX=1024m
         ports:

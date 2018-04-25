@@ -1,0 +1,4 @@
+# Kubernetes deployment description for Identifiers.org Satellite Web Frontend
+#
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: apps/v1beta2

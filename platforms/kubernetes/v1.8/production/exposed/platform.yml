@@ -64,3 +64,10 @@ spec:
               - backend:
                   serviceName: registry
                   servicePort: 8081
+    # Web Frontend rules
+    - host: cloud.aws.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: web-frontend
+                  servicePort: 9090

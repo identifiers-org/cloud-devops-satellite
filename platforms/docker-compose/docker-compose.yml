@@ -6,6 +6,7 @@
 
 version: "3"
 services:
+    web-frontend:
     metadata:
         image: identifiersorg/cloud-ws-metadata:1.0.1
         environment:

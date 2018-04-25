@@ -71,3 +71,9 @@ spec:
               - backend:
                   serviceName: web-frontend
                   servicePort: 9090
+    - host: cloud.gcloud.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: web-frontend
+                  servicePort: 9090

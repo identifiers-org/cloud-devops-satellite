@@ -26,3 +26,6 @@ spec:
                   resources:
                       requests:
                           memory: 512Mi
+                  env:
+                  - name: SAMPLE_VAR
+                    value: "sample_value"

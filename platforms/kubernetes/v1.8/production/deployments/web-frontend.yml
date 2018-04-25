@@ -12,3 +12,9 @@ spec:
             tier: frontend
             app: web-frontend
     replicas: 2
+    template:
+        metadata:
+            labels:
+                environment: production
+                tier: frontend
+                app: web-frontend

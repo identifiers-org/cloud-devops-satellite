@@ -26,8 +26,5 @@ spec:
                   resources:
                       requests:
                           memory: 512Mi
-                  env:
-                  - name: SAMPLE_VAR
-                    value: "sample_value"
                   ports:
                   - containerPort: 9090

@@ -29,3 +29,5 @@ spec:
                   env:
                   - name: SAMPLE_VAR
                     value: "sample_value"
+                  ports:
+                  - containerPort: 8000

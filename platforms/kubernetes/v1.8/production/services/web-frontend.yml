@@ -1,3 +1,5 @@
 # Kubernetes declaration of Identifiers.org Web Frontend Service
 #
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: v1
+kind: Service

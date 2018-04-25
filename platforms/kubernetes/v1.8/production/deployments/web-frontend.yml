@@ -30,4 +30,4 @@ spec:
                   - name: SAMPLE_VAR
                     value: "sample_value"
                   ports:
-                  - containerPort: 8000
+                  - containerPort: 9090

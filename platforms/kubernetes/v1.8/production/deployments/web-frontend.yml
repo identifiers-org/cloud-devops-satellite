@@ -18,3 +18,11 @@ spec:
                 environment: production
                 tier: frontend
                 app: web-frontend
+        spec:
+            containers:
+                - name: cloud-web-frontend
+                  image: identifiersorg/cloud-web-frontend:1.0.0
+                  imagePullPolicy: Always
+                  resources:
+                      requests:
+                          memory: 512Mi

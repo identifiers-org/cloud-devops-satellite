@@ -8,6 +8,8 @@ version: "3"
 services:
     web-frontend:
         image: identifiersorg/cloud-web-frontend:1.0.0
+        ports:
+            - "9090:9090"
     metadata:
         image: identifiersorg/cloud-ws-metadata:1.0.1
         environment:

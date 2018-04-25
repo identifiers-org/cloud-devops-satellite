@@ -9,3 +9,6 @@ metadata:
         environment: production
         tier: frontend
         app: web-frontend
+spec:
+    ports:
+    - port: 9090

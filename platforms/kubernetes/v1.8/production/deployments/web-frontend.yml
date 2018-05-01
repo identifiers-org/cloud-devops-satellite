@@ -21,7 +21,7 @@ spec:
         spec:
             containers:
                 - name: cloud-web-frontend
-                  image: identifiersorg/cloud-web-frontend:0.0.7
+                  image: identifiersorg/cloud-web-frontend:0.0.8
                   imagePullPolicy: Always
                   resources:
                       requests:

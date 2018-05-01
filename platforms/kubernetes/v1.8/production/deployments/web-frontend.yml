@@ -31,5 +31,9 @@ spec:
                     value: "resolver.api.aws.identifiers.org"
                   - name: WEB_CONFIG_SERVICE_RESOLVER_PORT
                     value: "80"
+                  - name: WEB_CONFIG_SERVICE_REGISTRY_HOST
+                    value: "registry.api.aws.identifiers.org"
+                  - name: WEB_CONFIG_SERVICE_REGISTRY_PORT
+                    value: "80"
                   ports:
                   - containerPort: 9090

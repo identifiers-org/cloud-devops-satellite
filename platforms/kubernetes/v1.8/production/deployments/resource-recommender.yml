@@ -21,7 +21,7 @@ spec:
         spec:
             containers:
                 - name: cloud-ws-resource-recommender
-                  image: identifiersorg/cloud-ws-resource-recommender:1.0.0
+                  image: identifiersorg/cloud-ws-resource-recommender:1.1.0
                   imagePullPolicy: Always
                   resources:
                       requests:

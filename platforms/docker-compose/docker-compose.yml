@@ -1,9 +1,7 @@
 # identifiers.org Satellite docker-compose based cloud deployment
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 
-#														#
-# Author: Manuel Bernal Llinares <mbdebian@gmail.com>	#
-#														#
-
+# TODO - Update this deployment definition, it is too old
 version: "3"
 services:
     web-frontend:

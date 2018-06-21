@@ -29,5 +29,7 @@ spec:
                   env:
                   - name: WS_RESOURCE_RECOMMENDER_JVM_MEMORY_MAX
                     value: "512m"
+                  - name: WS_RESOURCE_RECOMMENDER_CONFIG_BACKEND_SERVICE_LINK_CHECKER_HOST
+                    value: link-checker
                   ports:
                   - containerPort: 8083

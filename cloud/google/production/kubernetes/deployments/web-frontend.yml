@@ -30,3 +30,7 @@ spec:
                     value: "resolver.api.gcloud.identifiers.org"
                   - name: WEB_CONFIG_SERVICE_RESOLVER_PORT
                     value: "80"
+                  - name: WEB_CONFIG_SERVICE_REGISTRY_HOST
+                    value: "registry.api.gcloud.identifiers.org"
+                  - name: WEB_CONFIG_SERVICE_REGISTRY_PORT
+                    value: "80"

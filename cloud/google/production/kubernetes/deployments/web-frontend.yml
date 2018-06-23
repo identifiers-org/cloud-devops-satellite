@@ -34,3 +34,5 @@ spec:
                     value: "registry.api.gcloud.identifiers.org"
                   - name: WEB_CONFIG_SERVICE_REGISTRY_PORT
                     value: "80"
+                  ports:
+                  - containerPort: 9090

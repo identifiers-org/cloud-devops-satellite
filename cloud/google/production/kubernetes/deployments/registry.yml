@@ -30,3 +30,19 @@ spec:
                     value: "resolver"
                   - name: WS_REGISTRY_CONFIG_RESOLVER_PORT
                     value: "8080"
+                  - name: WS_REGISTRY_CONFIG_EMAIL_HOST
+                    value: "email-smtp.us-east-1.amazonaws.com"
+                  - name: WS_REGISTRY_CONFIG_EMAIL_PORT
+                    value: "587"
+                  - name: WS_REGISTRY_CONFIG_EMAIL_FROM
+                    value: "identifiers.org@gmail.com"
+                  - name: WS_REGISTRY_CONFIG_EMAIL_USERNAME
+                    valueFrom:
+                        secretKeyRef:
+                            name: aws-smtp-credentials
+                            key: username
+                  - name: WS_REGISTRY_CONFIG_EMAIL_PASSWORD
+                    valueFrom:
+                        secretKeyRef:
+                            name: aws-smtp-credentials
+                            key: password

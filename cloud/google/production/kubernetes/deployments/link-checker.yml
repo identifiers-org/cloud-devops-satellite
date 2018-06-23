@@ -11,3 +11,9 @@ spec:
             tier: api
             app: link-checker
     replicas: 2
+    template:
+        metadata:
+            labels:
+                environment: production
+                tier: api
+                app: link-checker

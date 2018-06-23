@@ -10,3 +10,4 @@ spec:
             environment: production
             tier: backend
             app: redis
+    replicas: 1

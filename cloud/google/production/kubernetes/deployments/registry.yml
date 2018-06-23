@@ -25,3 +25,8 @@ spec:
                   resources:
                       requests:
                           memory: 640Mi
+                  env:
+                  - name: WS_REGISTRY_CONFIG_RESOLVER_HOST
+                    value: "resolver"
+                  - name: WS_REGISTRY_CONFIG_RESOLVER_PORT
+                    value: "8080"

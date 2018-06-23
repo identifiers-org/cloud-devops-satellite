@@ -11,3 +11,9 @@ spec:
             tier: api
             app: resolver
     replicas: 2
+    template:
+        metadata:
+            labels:
+                environment: production
+                tier: api
+                app: resolver

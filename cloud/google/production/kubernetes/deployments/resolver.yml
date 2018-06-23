@@ -36,3 +36,5 @@ spec:
                     value: "8083"
                   - name: WS_RESOLVER_JVM_MEMORY_MAX
                     value: "512m"
+                  ports:
+                  - containerPort: 8080

@@ -2,3 +2,9 @@
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 apiVersion: v1
 kind: Service
+metadata:
+    name: web-frontend
+    labels:
+        environment: production
+        tier: frontend
+        app: web-frontend

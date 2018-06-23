@@ -17,3 +17,13 @@ spec:
                 environment: production
                 tier: backend
                 app: redis
+        spec:
+            containers:
+                - name: redis
+                  image: redis:4
+                  imagePullPolicy: Always
+                  resources:
+                      requests:
+                          memory: 1536Mi
+                  ports:
+                  - containerPort: 6379

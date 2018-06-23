@@ -25,3 +25,10 @@ spec:
                   resources:
                       requests:
                           memory: 1048Mi
+                  env:
+                  - name: WS_METADATA_CONFIG_RESOLVER_HOST
+                    value: "resolver"
+                  - name: WS_METADATA_CONFIG_RESOLVER_PORT
+                    value: "8080"
+                  - name: WS_METADATA_JVM_MEMORY_MAX
+                    value: "1024m"

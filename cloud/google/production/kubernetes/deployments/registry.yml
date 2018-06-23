@@ -46,3 +46,11 @@ spec:
                         secretKeyRef:
                             name: aws-smtp-credentials
                             key: password
+                  - name: WS_REGISTRY_CONFIG_EMAIL_TRANSPORT_PROTOCOL
+                    value: "smtp"
+                  - name: WS_REGISTRY_CONFIG_EMAIL_BOOLEAN_SMTP_AUTH
+                    value: "true"
+                  - name: WS_REGISTRY_CONFIG_EMAIL_BOOLEAN_START_TLS
+                    value: "true"
+                  - name: WS_REGISTRY_CONFIG_EMAIL_BOOLEAN_DEBUG
+                    value: "true"

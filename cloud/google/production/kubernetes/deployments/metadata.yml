@@ -32,3 +32,5 @@ spec:
                     value: "8080"
                   - name: WS_METADATA_JVM_MEMORY_MAX
                     value: "1024m"
+                  ports:
+                  - containerPort: 8082

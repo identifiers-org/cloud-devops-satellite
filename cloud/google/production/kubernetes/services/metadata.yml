@@ -1,2 +1,4 @@
 # Kubernetes declaration of Identifiers.org Metadata Resolution API Service
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: v1
+kind: Service

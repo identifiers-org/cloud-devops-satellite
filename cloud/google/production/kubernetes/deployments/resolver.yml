@@ -22,3 +22,6 @@ spec:
                 - name: cloud-ws-resolver
                   image: identifiersorg/cloud-ws-resolver:1.0.4
                   imagePullPolicy: Always
+                  resources:
+                      requests:
+                          memory: 640Mi

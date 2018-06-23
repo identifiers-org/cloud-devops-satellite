@@ -54,3 +54,5 @@ spec:
                     value: "true"
                   - name: WS_REGISTRY_CONFIG_EMAIL_BOOLEAN_DEBUG
                     value: "true"
+                  - name: WS_REGISTRY_JVM_MEMORY_MAX
+                    value: "512m"

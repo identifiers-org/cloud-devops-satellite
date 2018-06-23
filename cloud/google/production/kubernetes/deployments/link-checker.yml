@@ -10,8 +10,9 @@ spec:
             environment: production
             tier: api
             app: link-checker
-    minReplicas: 1
-    maxReplicas: 4
+    replicas:
+        min: 1
+        max: 4
     template:
         metadata:
             labels:

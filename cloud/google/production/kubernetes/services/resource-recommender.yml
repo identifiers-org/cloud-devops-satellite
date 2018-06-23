@@ -8,3 +8,10 @@ metadata:
         environment: production
         tier: api
         app: resource-recommender
+spec:
+    ports:
+    - port: 8083
+    selector:
+        environment: production
+        tier: api
+        app: resource-recommender

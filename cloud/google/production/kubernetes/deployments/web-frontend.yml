@@ -4,3 +4,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
     name: web-frontend
+spec:
+    selector:
+        matchLabels:
+            environment: production
+            tier: frontend
+            app: web-frontend

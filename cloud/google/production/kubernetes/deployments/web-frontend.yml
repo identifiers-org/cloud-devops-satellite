@@ -25,3 +25,8 @@ spec:
                   resources:
                       requests:
                           memory: 512Mi
+                  env:
+                  - name: WEB_CONFIG_SERVICE_RESOLVER_HOST
+                    value: "resolver.api.gcloud.identifiers.org"
+                  - name: WEB_CONFIG_SERVICE_RESOLVER_PORT
+                    value: "80"

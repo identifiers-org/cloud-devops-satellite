@@ -4,3 +4,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
     name: metadata
+spec:
+    selector:
+        matchLabels:
+            environment: production
+            tier: api
+            app: metadata

@@ -17,3 +17,8 @@ spec:
                 environment: production
                 tier: api
                 app: resolver
+        spec:
+            containers:
+                - name: cloud-ws-resolver
+                  image: identifiersorg/cloud-ws-resolver:1.0.4
+                  imagePullPolicy: Always

@@ -56,3 +56,5 @@ spec:
                     value: "true"
                   - name: WS_REGISTRY_JVM_MEMORY_MAX
                     value: "512m"
+                  ports:
+                  - containerPort: 8081

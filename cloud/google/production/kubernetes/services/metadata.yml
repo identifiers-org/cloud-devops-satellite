@@ -2,3 +2,9 @@
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 apiVersion: v1
 kind: Service
+metadata:
+    name: metadata
+    labels:
+        environment: production
+        tier: api
+        app: metadata

@@ -10,3 +10,4 @@ spec:
             environment: production
             tier: api
             app: link-checker
+    replicas: 2

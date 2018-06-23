@@ -17,3 +17,8 @@ spec:
                 environment: production
                 tier: api
                 app: registry
+        spec:
+            containers:
+                - name: cloud-ws-registry
+                  image: identifiersorg/cloud-ws-registry:1.0.2
+                  imagePullPolicy: Always

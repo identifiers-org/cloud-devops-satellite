@@ -22,3 +22,6 @@ spec:
                 - name: cloud-ws-metadata
                   image: identifiersorg/cloud-ws-metadata:1.0.1
                   imagePullPolicy: Always
+                  resources:
+                      requests:
+                          memory: 1048Mi

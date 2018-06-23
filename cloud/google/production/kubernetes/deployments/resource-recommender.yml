@@ -17,3 +17,11 @@ spec:
                 environment: production
                 tier: api
                 app: resource-recommender
+        spec:
+            containers:
+                - name: cloud-ws-resource-recommender
+                  image: identifiersorg/cloud-ws-resource-recommender:1.1.0
+                  imagePullPolicy: Always
+                  resources:
+                      requests:
+                          memory: 640Mi

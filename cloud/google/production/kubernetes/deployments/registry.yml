@@ -22,3 +22,6 @@ spec:
                 - name: cloud-ws-registry
                   image: identifiersorg/cloud-ws-registry:1.0.2
                   imagePullPolicy: Always
+                  resources:
+                      requests:
+                          memory: 640Mi

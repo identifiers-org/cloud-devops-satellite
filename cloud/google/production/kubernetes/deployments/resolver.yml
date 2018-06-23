@@ -1,2 +1,4 @@
 # Kubernetes deployment description for Identifiers.org Compact ID Resolution API Service
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: apps/v1
+kind: Deployment

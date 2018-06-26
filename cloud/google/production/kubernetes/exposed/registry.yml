@@ -16,3 +16,4 @@ spec:
         environment: production
         tier: api
         app: registry
+    type: LoadBalancer

@@ -8,3 +8,7 @@ metadata:
         environment: production
         tier: api
         app: metadata
+spec:
+    ports:
+    - port: 80
+      targetPort: 8082

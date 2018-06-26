@@ -12,3 +12,7 @@ spec:
     ports:
     - port: 80
       targetPort: 8081
+    selector:
+        environment: production
+        tier: api
+        app: registry

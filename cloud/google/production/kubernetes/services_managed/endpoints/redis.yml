@@ -1,2 +1,4 @@
 # Managed Redis Endpoint for Google Cloud
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+kind: Endpoints
+apiVersion: v1

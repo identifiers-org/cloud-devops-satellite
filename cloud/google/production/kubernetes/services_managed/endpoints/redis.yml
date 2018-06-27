@@ -2,3 +2,5 @@
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 kind: Endpoints
 apiVersion: v1
+metadata:
+  name: redis

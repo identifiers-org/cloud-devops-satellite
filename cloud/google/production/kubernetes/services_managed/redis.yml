@@ -9,3 +9,6 @@ metadata:
         tier: backend
         app: redis
         managed: yes
+spec:
+    ports:
+    - port: 6379

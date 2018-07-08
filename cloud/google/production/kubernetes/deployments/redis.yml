@@ -1,5 +1,6 @@
 # Kubernetes deployment description for backend Redis
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+# TODO - Remove this deployment, a cloud managed service will be used for this
 apiVersion: apps/v1
 kind: Deployment
 metadata:

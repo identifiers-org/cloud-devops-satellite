@@ -1,5 +1,6 @@
 # Kubernetes declaration of Identifiers.org Web Frontend
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+# TODO - Unless another service is planning on using this service internally, it probably doesn't make sense to have this definition
 apiVersion: v1
 kind: Service
 metadata:

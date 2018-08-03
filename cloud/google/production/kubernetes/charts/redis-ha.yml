@@ -1,2 +1,12 @@
 # redis-ha chart configuration file
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+cluster:
+    slaveCount: 3
+metrics:
+    enabled: true
+master:
+    persistence:
+        enabled: false
+    resources:
+        Memory: 1024Mi
+        CPU: 400m

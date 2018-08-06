@@ -30,5 +30,7 @@ spec:
                     value: "512m"
                   - name: WS_LINK_CHECKER_CONFIG_REDIS_HOST
                     value: "redisha-redis-ha.default.svc.cluster.local"
+                  - name: WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST
+                    value: "resolver"
                   ports:
                   - containerPort: 8084

@@ -1,2 +1,7 @@
 # redis-ha chart configuration file
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+resources:
+    server:
+        memory: 2Gi
+        cpu: 1
+        

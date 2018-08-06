@@ -23,3 +23,5 @@ resources:
 replicas:
     servers: 5
     sentinels: 5
+cluster:
+    slaveCount: 2

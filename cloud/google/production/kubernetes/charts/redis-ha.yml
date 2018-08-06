@@ -10,6 +10,6 @@ resources:
 replicas:
     servers: 3
     sentinels: 3
-servers:
-    serviceType: LoadBalancer
-    annotations: cloud.google.com/load-balancer-type:Internal
+#servers:
+#    serviceType: LoadBalancer
+#    annotations: cloud\.google\.com/load-balancer-type:Internal

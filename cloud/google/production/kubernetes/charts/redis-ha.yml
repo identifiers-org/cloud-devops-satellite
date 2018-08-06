@@ -24,4 +24,11 @@ replicas:
     servers: 5
     sentinels: 5
 cluster:
+    enabled: true # Default, but who knows, the documentation is not great
     slaveCount: 2
+master:
+    persistence:
+        enabled: false
+    podLabels:
+        backend-node: redisha
+        redisha-role: master

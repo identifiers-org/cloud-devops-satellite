@@ -8,8 +8,9 @@ resources:
         memory: 200Mi
         cpu: 100m
 replicas:
-    servers: 3
-    sentinels: 3
+    master: 2
+    slave: 3
+    sentinels: 5
 #servers:
 #    serviceType: LoadBalancer
 #    annotations: cloud\.google\.com/load-balancer-type:Internal

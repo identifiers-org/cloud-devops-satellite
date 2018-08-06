@@ -4,4 +4,6 @@ resources:
     server:
         memory: 2Gi
         cpu: 1
-        
+    sentinel:
+        memory: 200Mi
+        cpu: 100m

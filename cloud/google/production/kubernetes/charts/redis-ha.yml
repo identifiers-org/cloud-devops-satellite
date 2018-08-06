@@ -7,3 +7,6 @@ resources:
     sentinel:
         memory: 200Mi
         cpu: 100m
+replicas:
+    servers: 3
+    sentinels: 3

@@ -1,16 +1,17 @@
 # redis-ha chart configuration file
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
-resources:
-    server:
-        memory: 2Gi
-        cpu: 1
-    sentinel:
-        memory: 200Mi
-        cpu: 100m
-replicas:
-    master: 2
-    slave: 3
-    sentinels: 5
-#servers:
-#    serviceType: LoadBalancer
-#    annotations: cloud\.google\.com/load-balancer-type:Internal
+cluster:
+    slaveCount: 3
+master:
+    resources:
+        Memory: 2Gi
+        CPU: 1
+    persistence:
+        enabled: false
+    podLabels:
+        backend-node: redisha
+        redisha-role: master
+slave:
+    podLabels:
+        backend-node: redisha
+        redisha-role: slave

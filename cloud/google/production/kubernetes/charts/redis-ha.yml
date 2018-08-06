@@ -10,3 +10,5 @@ resources:
 replicas:
     servers: 3
     sentinels: 3
+servers:
+    serviceType: LoadBalancer

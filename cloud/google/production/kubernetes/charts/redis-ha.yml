@@ -1,17 +1,25 @@
 # redis-ha chart configuration file
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
-cluster:
-    slaveCount: 3
-master:
-    resources:
-        Memory: 2Gi
-        CPU: 1
-    persistence:
-        enabled: false
-    podLabels:
-        backend-node: redisha
-        redisha-role: master
-slave:
-    podLabels:
-        backend-node: redisha
-        redisha-role: slave
+# --- Redis configuration, it doesn't work for redis-ha
+#cluster:
+#    slaveCount: 3
+#master:
+#    resources:
+#        Memory: 2Gi
+#        CPU: 1
+#    persistence:
+#        enabled: false
+#    podLabels:
+#        backend-node: redisha
+#        redisha-role: master
+#slave:
+#    podLabels:
+#        backend-node: redisha
+#        redisha-role: slave
+# --- End of Redis configuration
+resources:
+    server:
+        Memory: 1500Mi
+replicas:
+    servers: 5
+    sentinels: 5

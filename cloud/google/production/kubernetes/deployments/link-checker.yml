@@ -29,7 +29,7 @@ spec:
                   - name: WS_LINK_CHECKER_JVM_MEMORY_MAX
                     value: "512m"
                   - name: WS_LINK_CHECKER_CONFIG_REDIS_HOST
-                    value: "redisha-redis-ha.default.svc.cluster.local"
+                    value: "redis"
                   - name: WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST
                     value: "resolver"
                   ports:

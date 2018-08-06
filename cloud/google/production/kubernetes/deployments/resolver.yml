@@ -27,7 +27,7 @@ spec:
                           memory: 640Mi
                   env:
                   - name: WS_RESOLVER_CONFIG_REDIS_HOST
-                    value: "redisha-redis-ha-master-svc"
+                    value: "redis"
                   - name: WS_RESOLVER_CONFIG_REDIS_PORT
                     value: "6379"
                   - name: WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_HOST

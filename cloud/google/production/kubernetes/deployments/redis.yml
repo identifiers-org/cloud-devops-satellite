@@ -1,0 +1,29 @@
+# Kubernetes deployment description for Identifiers.org Redis service within Identifiers.org platform
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: redis
+spec:
+    selector:
+        matchLabels:
+            environment: production
+            tier: backend
+            app: redis
+    replicas: 1
+    template:
+        metadata:
+            labels:
+                environment: production
+                tier: backend
+                app: redis
+        spec:
+            containers:
+                - name: redis
+                  image: redis:4.0.8-alpine
+                  imagePullPolicy: Always
+                  resources:
+                      requests:
+                          memory: 1500Mi
+                  ports:
+                  - containerPort: 6379

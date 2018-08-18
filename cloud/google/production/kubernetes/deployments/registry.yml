@@ -26,6 +26,10 @@ spec:
                       requests:
                           memory: 640Mi
                   env:
+                  - name: WS_REGISTRY_CONFIG_REDIS_HOST
+                    value: "redis"
+                  - name: WS_REGISTRY_CONFIG_REDIS_PORT
+                    value: "6379"
                   - name: WS_REGISTRY_CONFIG_RESOLVER_HOST
                     value: "resolver"
                   - name: WS_REGISTRY_CONFIG_RESOLVER_PORT

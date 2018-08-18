@@ -20,7 +20,7 @@ spec:
         spec:
             containers:
                 - name: cloud-ws-registry
-                  image: identifiersorg/cloud-ws-registry:1.0.2
+                  image: identifiersorg/cloud-ws-registry:1.1.0
                   imagePullPolicy: Always
                   resources:
                       requests:

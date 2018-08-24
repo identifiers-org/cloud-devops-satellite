@@ -20,7 +20,7 @@ spec:
         spec:
             containers:
                 - name: cloud-ws-metadata
-                  image: identifiersorg/cloud-ws-metadata:1.0.1
+                  image: identifiersorg/cloud-ws-metadata:1.1.0
                   imagePullPolicy: Always
                   resources:
                       requests:

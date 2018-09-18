@@ -20,7 +20,7 @@ spec:
         spec:
             containers:
                 - name: cloud-ws-resolver
-                  image: identifiersorg/cloud-ws-resolver:1.0.4
+                  image: identifiersorg/cloud-ws-resolver:1.0.7
                   imagePullPolicy: Always
                   resources:
                       requests:

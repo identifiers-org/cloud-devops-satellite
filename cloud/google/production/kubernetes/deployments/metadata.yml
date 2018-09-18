@@ -32,5 +32,7 @@ spec:
                     value: "8080"
                   - name: WS_METADATA_JVM_MEMORY_MAX
                     value: "1024m"
+                  - name: WS_METADATA_CONFIG_REDIS_HOST
+                    value: "redis"
                   ports:
                   - containerPort: 8082

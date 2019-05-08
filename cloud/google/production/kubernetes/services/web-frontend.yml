@@ -4,15 +4,17 @@
 apiVersion: v1
 kind: Service
 metadata:
-    name: web-frontend
+    name: web-satellite
     labels:
         environment: production
         tier: frontend
-        app: web-frontend
+        app: web-satellite
+        deployment: satellite
 spec:
     ports:
     - port: 9090
     selector:
         environment: production
         tier: frontend
-        app: web-frontend
+        app: web-satellite
+        deployment: satellite

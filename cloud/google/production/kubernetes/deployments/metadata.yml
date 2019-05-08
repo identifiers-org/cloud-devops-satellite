@@ -10,17 +10,19 @@ spec:
             environment: production
             tier: api
             app: metadata
-    replicas: 3
+            deployment: satellite
+    replicas: 2
     template:
         metadata:
             labels:
                 environment: production
                 tier: api
                 app: metadata
+                deployment: satellite
         spec:
             containers:
                 - name: cloud-ws-metadata
-                  image: identifiersorg/cloud-ws-metadata:1.3.0
+                  image: identifiersorg/cloud-ws-metadata:1.3.2
                   imagePullPolicy: Always
                   resources:
                       requests:
@@ -36,3 +38,15 @@ spec:
                     value: "redis"
                   ports:
                   - containerPort: 8082
+                  readinessProbe:
+                      httpGet:
+                          path: /healthApi/readiness_check
+                          port: 8082
+                      initialDelaySeconds: 5
+                      periodSeconds: 10
+                  livenessProbe:
+                      httpGet:
+                          path: /healthApi/liveness_check
+                          port: 8082
+                      initialDelaySeconds: 5
+                      periodSeconds: 10

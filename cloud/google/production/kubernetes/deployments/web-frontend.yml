@@ -3,20 +3,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: web-frontend
+    name: web-satellite
 spec:
     selector:
         matchLabels:
             environment: production
             tier: frontend
-            app: web-frontend
+            app: web-satellite
+            deployment: satellite
     replicas: 2
     template:
         metadata:
             labels:
                 environment: production
                 tier: frontend
-                app: web-frontend
+                app: web-satellite
+                deployment: satellite
         spec:
             containers:
                 - name: cloud-web-frontend
@@ -27,11 +29,11 @@ spec:
                           memory: 512Mi
                   env:
                   - name: WEB_CONFIG_SERVICE_RESOLVER_HOST
-                    value: "resolver.api.gcloud.identifiers.org"
+                    value: "resolver.api.identifiers.org"
                   - name: WEB_CONFIG_SERVICE_RESOLVER_PORT
                     value: "80"
                   - name: WEB_CONFIG_SERVICE_REGISTRY_HOST
-                    value: "registry.api.gcloud.identifiers.org"
+                    value: "registry.api.identifiers.org"
                   - name: WEB_CONFIG_SERVICE_REGISTRY_PORT
                     value: "80"
                   ports:

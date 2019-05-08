@@ -1,2 +1,38 @@
 # Identifiers.org satellite platform ingress controller
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: satellite-deployment
+    labels:
+        environment: production
+        tier: api
+        app: satellite-deployment
+    annotations:
+        kubernetes.io/ingress.class: "gce"
+        kubernetes.io/ingress.global-static-ip-name: ipaddr-iorg-satellite-production
+        ingress.gcp.kubernetes.io/pre-shared-cert: 'cert-iorg-satellite-production-resolver,cert-iorg-satellite-production-metadata,cert-iorg-satellite-production-web'
+        #kubernetes.io/ingress.allow-http: "false"
+spec:
+    rules:
+    # Resolver rules
+    - host: resolver.api.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: nodeport-resolver
+                  servicePort: 8080
+    # Metadata Service rules
+    - host: metadata.api.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: nodeport-metadata
+                  servicePort: 8082
+    # Web Frontend rules
+    - host: cloud.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: nodeport-web-satellite
+                  servicePort: 9090

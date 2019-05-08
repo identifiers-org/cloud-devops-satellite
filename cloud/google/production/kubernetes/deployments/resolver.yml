@@ -10,6 +10,7 @@ spec:
             environment: production
             tier: api
             app: resolver
+            deployment: satellite
     replicas: 3
     template:
         metadata:
@@ -17,10 +18,11 @@ spec:
                 environment: production
                 tier: api
                 app: resolver
+                deployment: satellite
         spec:
             containers:
                 - name: cloud-ws-resolver
-                  image: identifiersorg/cloud-ws-resolver:1.0.7
+                  image: identifiersorg/cloud-ws-resolver:2.0.0
                   imagePullPolicy: Always
                   resources:
                       requests:
@@ -38,3 +40,15 @@ spec:
                     value: "512m"
                   ports:
                   - containerPort: 8080
+                  readinessProbe:
+                      httpGet:
+                          path: /healthApi/readiness_check
+                          port: 8080
+                      initialDelaySeconds: 5
+                      periodSeconds: 10
+                  livenessProbe:
+                      httpGet:
+                          path: /healthApi/liveness_check
+                          port: 8080
+                      initialDelaySeconds: 5
+                      periodSeconds: 10

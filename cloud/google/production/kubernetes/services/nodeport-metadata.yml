@@ -1,20 +1,20 @@
-# Kubernetes declaration of Identifiers.org Compact ID Resolution API Service
+# Kubernetes declaration of Identifiers.org Metadata Resolution API Service
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 apiVersion: v1
 kind: Service
 metadata:
-    name: nodeport-resolver
+    name: nodeport-metadata
     labels:
         environment: production
         tier: api
-        app: resolver
+        app: metadata
         deployment: satellite
 spec:
     ports:
-    - port: 8080
+    - port: 8082
     selector:
         environment: production
         tier: api
-        app: resolver
+        app: metadata
         deployment: satellite
     type: NodePort

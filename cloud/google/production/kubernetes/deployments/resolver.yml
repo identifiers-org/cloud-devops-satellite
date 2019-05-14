@@ -36,6 +36,8 @@ spec:
                     value: "resource-recommender"
                   - name: WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_PORT
                     value: "8083"
+                  - name: WS_RESOLVER_CONFIG_REGISTRY_RESOLUTION_DATASET_ENDPOINT
+                    value: "https://registry.api.identifiers.org/resolutionApi/getResolverDataset"
                   - name: WS_RESOLVER_JVM_MEMORY_MAX
                     value: "512m"
                   ports:

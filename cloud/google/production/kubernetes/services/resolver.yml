@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-    name: nodeport-resolver
+    name: resolver
     labels:
         environment: production
         tier: api

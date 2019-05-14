@@ -33,7 +33,7 @@ spec:
                   - name: WEB_CONFIG_SERVICE_RESOLVER_PORT
                     value: "80"
                   - name: WEB_CONFIG_SERVICE_REGISTRY_HOST
-                    value: "registry.api.identifiers.org"
+                    value: "localhost"
                   - name: WEB_CONFIG_SERVICE_REGISTRY_PORT
                     value: "80"
                   ports:

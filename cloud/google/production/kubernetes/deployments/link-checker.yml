@@ -34,3 +34,15 @@ spec:
                     value: "resolver"
                   ports:
                   - containerPort: 8084
+                  readinessProbe:
+                      httpGet:
+                          path: /healthApi/readiness_check
+                          port: 8084
+                      initialDelaySeconds: 5
+                      periodSeconds: 10
+                  livenessProbe:
+                      httpGet:
+                          path: /healthApi/liveness_check
+                          port: 8084
+                      initialDelaySeconds: 5
+                      periodSeconds: 10

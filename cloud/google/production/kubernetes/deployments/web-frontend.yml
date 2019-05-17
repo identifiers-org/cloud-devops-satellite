@@ -22,19 +22,43 @@ spec:
         spec:
             containers:
                 - name: cloud-web-frontend
-                  image: identifiersorg/cloud-web-frontend:0.2.2
+                  image: identifiersorg/cloud-web-spa:0.1.0
                   imagePullPolicy: Always
                   resources:
                       requests:
                           memory: 512Mi
                   env:
-                  - name: WEB_CONFIG_SERVICE_RESOLVER_HOST
-                    value: "resolver.api.identifiers.org"
-                  - name: WEB_CONFIG_SERVICE_RESOLVER_PORT
-                    value: "80"
-                  - name: WEB_CONFIG_SERVICE_REGISTRY_HOST
-                    value: "localhost"
-                  - name: WEB_CONFIG_SERVICE_REGISTRY_PORT
-                    value: "80"
+                  - name: SATELLITE_WEB_SPA_CONFIG_WS_RESOLVER_HOST
+                    value: "resolver"
+                  - name: SATELLITE_WEB_SPA_CONFIG_WS_RESOLVER_PORT
+                    value: "8080"
+                  - name: SATELLITE_WEB_SPA_CONFIG_WS_RESOLVER_SCHEMA
+                    value: "http"
+                  - name: SATELLITE_WEB_SPA_CONFIG_WS_RESOLVER_URL
+                    value: "https://resolver.api.identifiers.org"
+                  - name: SATELLITE_WEB_SPA_CONFIG_WS_HQ_REGISTRY_URL
+                    value: "https://registry.api.identifiers.org"
+                  - name: SATELLITE_WEB_SPA_CONFIG_WS_API_VERSION
+                    value: "1.0"
+                  - name: SATELLITE_WEB_SPA_CONFIG_WEB_HQ_REGISTRY_URL
+                    value: "https://registry.identifiers.org"
+                  - name: SATELLITE_WEB_SPA_CONFIG_WEB_HQ_REGISTRY_PREFIX_REGISTRATION_FORM_URL
+                    value: "https://registry.identifiers.org/prefixregistrationrequest"
+                  - name: SATELLITE_WEB_SPA_CONFIG_FLAG_SHOW_SEARCH_SUGGESTIONS
+                    value: "true"
+                  - name: SATELLITE_WEB_SPA_CONFIG_CORS_ORIGIN
+                    value: "http://identifiers.org,https://identifiers.org,http://cloud.identifiers.org,https://cloud.identifiers.org"
                   ports:
                   - containerPort: 9090
+                  readinessProbe:
+                      httpGet:
+                          path: /healthApi/readiness_check
+                          port: 9090
+                      initialDelaySeconds: 5
+                      periodSeconds: 10
+                  livenessProbe:
+                      httpGet:
+                          path: /healthApi/liveness_check
+                          port: 9090
+                      initialDelaySeconds: 5
+                      periodSeconds: 10

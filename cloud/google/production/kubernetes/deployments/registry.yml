@@ -10,7 +10,7 @@ spec:
             environment: production
             tier: api
             app: registry
-    replicas: 2
+    replicas: 1
     template:
         metadata:
             labels:

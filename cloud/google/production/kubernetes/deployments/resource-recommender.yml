@@ -10,7 +10,7 @@ spec:
             environment: production
             tier: api
             app: resource-recommender
-    replicas: 3
+    replicas: 2
     template:
         metadata:
             labels:

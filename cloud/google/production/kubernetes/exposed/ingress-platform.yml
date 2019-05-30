@@ -11,7 +11,7 @@ metadata:
     annotations:
         kubernetes.io/ingress.class: "gce"
         kubernetes.io/ingress.global-static-ip-name: ipaddr-iorg-satellite-production
-        ingress.gcp.kubernetes.io/pre-shared-cert: 'cert-iorg-sat-prod-resolver,cert-iorg-sat-prod-metadata,cert-iorg-sat-prod-web'
+        ingress.gcp.kubernetes.io/pre-shared-cert: 'cert-iorg-sat-prod-resolver,cert-iorg-sat-prod-metadata,cert-iorg-sat-prod-web,cert-iorg-sat-prod-web-main2'
         kubernetes.io/ingress.allow-http: "true"
 spec:
     rules:
@@ -31,6 +31,12 @@ spec:
                   servicePort: 8082
     # Web Frontend rules
     - host: cloud.identifiers.org
+      http:
+          paths:
+              - backend:
+                  serviceName: nodeport-web-satellite
+                  servicePort: 80
+    - host: identifiers.org
       http:
           paths:
               - backend:

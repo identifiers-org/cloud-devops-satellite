@@ -51,4 +51,4 @@ $KOPS create cluster --name=$cluster_name \
 logdevops "SSH Key Pair"
 $KOPS create secret --name $cluster_name sshpublickey admin -i $cluster_public_key_file
 logdevops "Update cluster"
-$KOPS update cluster --state=$KOPS_STATE_STORE --name=$cluster_name
+$KOPS update cluster --state=$KOPS_STATE_STORE --name=$cluster_name --yes

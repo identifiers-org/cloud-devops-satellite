@@ -35,9 +35,13 @@ loginfo "\tState: '$KOPS_STATE_STORE'"
 logdevops "Creating bucket '$KOPS_STATE_STORE', region '$s3_bucket_region'"
 aws s3api create-bucket \
     --bucket $KOPS_STATE_STORE \
+    --create-bucket-configuration LocationConstraint=$s3_bucket_region \
     --region $s3_bucket_region
+logdevops "Enabling versioning on '$KOPS_STATE_STORE'"
+aws s3api put-bucket-versioning --bucket $KOPS_STATE_STORE  --versioning-configuration Status=Enabled
 
 # Create cluster SSH public key
+# Not yet
 
 # Create cluster configuration
 $KOPS create cluster --name=$cluster_name \

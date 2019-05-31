@@ -26,7 +26,7 @@ export kops_bucket_name=mbdebian-k8s-experimental-state-store
 export KOPS_STATE_STORE=s3://mbdebian-k8s-experimental-state-store
 export cluster_zones="eu-north-1a"
 export s3_bucket_region="eu-north-1"
-export cluster_public_key_file="~/.ssh/bofh_aws_terraform.pub"
+export cluster_public_key_file="$HOME/.ssh/bofh_aws_terraform.pub"
 
 # Show information
 loginfo "Cluster configuration for"
@@ -43,6 +43,7 @@ logdevops "Enabling versioning on '$KOPS_STATE_STORE'"
 aws s3api put-bucket-versioning --bucket $kops_bucket_name  --versioning-configuration Status=Enabled
 
 # Create cluster SSH public key
+logdevops "SSH Key Pair"
 $KOPS create secret --name $cluster_name sshpublickey admin -i $cluster_public_key_file
 
 # Create cluster configuration

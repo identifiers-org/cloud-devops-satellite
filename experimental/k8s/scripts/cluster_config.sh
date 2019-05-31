@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Launching a kubernetes cluster on AWS for experiments
+# Configuring a kubernetes cluster on AWS for experiments
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
 
 # Helpers
@@ -26,5 +26,9 @@ loginfo "Launch the cluster"
 loginfo "\tName: '$cluster_name'"
 loginfo "\tState: '$KOPS_STATE_STORE'"
 
+# Create cluster SSH public key
+
 # Create cluster configuration
-$KOPS create cluster 
+$KOPS create cluster --name=$cluster_name \
+  --state=$KOPS_STATE_STORE --zones=$cluster_zones \
+  --node-count=3 --node-size=t3.small --master-size=t3.small

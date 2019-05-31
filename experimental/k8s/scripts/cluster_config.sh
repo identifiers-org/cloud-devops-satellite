@@ -18,7 +18,7 @@ function logdevops() {
 }
 
 # Tools
-KOPS=$(~/apps/bin/kops)
+KOPS="$HOME/apps/bin/kops"
 
 # Cluster parameters
 export cluster_name=experimental.k8s.local

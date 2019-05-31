@@ -22,6 +22,7 @@ KOPS=$(~/apps/bin/kops)
 
 # Cluster parameters
 export cluster_name=experimental.k8s.local
+export kops_bucket_name=mbdebian-k8s-experimental-state-store
 export KOPS_STATE_STORE=s3://mbdebian-k8s-experimental-state-store
 export cluster_zones="eu-north-1a"
 export s3_bucket_region="eu-north-1"
@@ -34,11 +35,11 @@ loginfo "\tState: '$KOPS_STATE_STORE'"
 # Create S3 bucket
 logdevops "Creating bucket '$KOPS_STATE_STORE', region '$s3_bucket_region'"
 aws s3api create-bucket \
-    --bucket $KOPS_STATE_STORE \
+    --bucket $kops_bucket_name \
     --create-bucket-configuration LocationConstraint=$s3_bucket_region \
     --region $s3_bucket_region
 logdevops "Enabling versioning on '$KOPS_STATE_STORE'"
-aws s3api put-bucket-versioning --bucket $KOPS_STATE_STORE  --versioning-configuration Status=Enabled
+aws s3api put-bucket-versioning --bucket $kops_bucket_name  --versioning-configuration Status=Enabled
 
 # Create cluster SSH public key
 # Not yet

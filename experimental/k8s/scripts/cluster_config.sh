@@ -23,7 +23,7 @@ KOPS="$HOME/apps/bin/kops"
 # Cluster parameters
 export cluster_name=experimental.k8s.local
 export kops_bucket_name=mbdebian-k8s-experimental-state-store
-export KOPS_STATE_STORE=s3://mbdebian-k8s-experimental-state-store
+export KOPS_STATE_STORE="s3://$kops_bucket_name"
 export cluster_zones="eu-north-1a"
 export s3_bucket_region="eu-north-1"
 export cluster_public_key_file="$HOME/.ssh/bofh_aws_terraform.pub"

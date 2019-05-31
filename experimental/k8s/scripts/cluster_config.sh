@@ -21,11 +21,12 @@ function logdevops() {
 KOPS="$HOME/apps/bin/kops"
 
 # Cluster parameters
+export working_region="eu-west-1"
 export cluster_name=experimental.k8s.local
 export kops_bucket_name=mbdebian-k8s-experimental-state-store
 export KOPS_STATE_STORE="s3://$kops_bucket_name"
-export cluster_zones="us-east-1a"
-export s3_bucket_region="us-east-1"
+export s3_bucket_region="$working_region"
+export cluster_zones="${working_region}a"
 export cluster_public_key_file="$HOME/.ssh/bofh_aws_terraform.pub"
 
 # Show information

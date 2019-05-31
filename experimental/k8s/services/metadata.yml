@@ -1,0 +1,19 @@
+# Kubernetes declaration of Identifiers.org Metadata Resolution API Service
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: v1
+kind: Service
+metadata:
+    name: metadata
+    labels:
+        environment: production
+        tier: api
+        app: metadata
+        deployment: satellite
+spec:
+    ports:
+    - port: 8082
+    selector:
+        environment: production
+        tier: api
+        app: metadata
+        deployment: satellite

@@ -1,0 +1,17 @@
+# Kubernetes declaration of Identifiers.org Link Checker Service
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: v1
+kind: Service
+metadata:
+    name: link-checker
+    labels:
+        environment: production
+        tier: api
+        app: link-checker
+spec:
+    ports:
+    - port: 8084
+    selector:
+        environment: production
+        tier: api
+        app: link-checker

@@ -42,11 +42,13 @@ aws s3api create-bucket \
 logdevops "Enabling versioning on '$KOPS_STATE_STORE'"
 aws s3api put-bucket-versioning --bucket $kops_bucket_name  --versioning-configuration Status=Enabled
 
-# Create cluster SSH public key
-logdevops "SSH Key Pair"
-$KOPS create secret --name $cluster_name sshpublickey admin -i $cluster_public_key_file
-
 # Create cluster configuration
 $KOPS create cluster --name=$cluster_name \
   --state=$KOPS_STATE_STORE --zones=$cluster_zones \
   --node-count=3 --node-size=t3.small --master-size=t3.small
+
+# Create cluster SSH public key
+logdevops "SSH Key Pair"
+$KOPS create secret --name $cluster_name sshpublickey admin -i $cluster_public_key_file
+logdevops "Update cluster"
+$KOPS update cluster --state=$KOPS_STATE_STORE --name=$cluster_name

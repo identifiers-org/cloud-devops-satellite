@@ -13,6 +13,10 @@ function loginfo() {
     log INFO $@
 }
 
+function logdevops() {
+    log DEVOPS $@
+}
+
 # Tools
 KOPS=$(~/apps/bin/kops)
 
@@ -20,11 +24,18 @@ KOPS=$(~/apps/bin/kops)
 export cluster_name=experimental.k8s.local
 export KOPS_STATE_STORE=s3://mbdebian-k8s-experimental-state-store
 export cluster_zones="eu-north-1a"
+export s3_bucket_region="eu-north-1"
 
 # Show information
-loginfo "Launch the cluster"
+loginfo "Cluster configuration for"
 loginfo "\tName: '$cluster_name'"
 loginfo "\tState: '$KOPS_STATE_STORE'"
+
+# Create S3 bucket
+logdevops "Creating bucket '$KOPS_STATE_STORE', region '$s3_bucket_region'"
+aws s3api create-bucket \
+    --bucket $KOPS_STATE_STORE \
+    --region $s3_bucket_region
 
 # Create cluster SSH public key
 

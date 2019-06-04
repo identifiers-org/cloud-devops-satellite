@@ -23,7 +23,7 @@ spec:
             affinity:
               nodeAffinity:
                 preferredDuringSchedulingIgnoredDuringExecution:
-                  - weight: 1
+                  - weight: 5
                     preference:
                       matchExpressions:
                         - key: node-reliability
@@ -32,7 +32,7 @@ spec:
                             - stable
               podAntiAffinity:
                 preferredDuringSchedulingIgnoredDuringExecution:
-                  - weight: 1
+                  - weight: 10
                     podAffinityTerm:
                       labelSelector:
                         matchExpressions:

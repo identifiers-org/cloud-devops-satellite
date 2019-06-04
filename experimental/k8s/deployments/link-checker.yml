@@ -72,12 +72,12 @@ spec:
                   imagePullPolicy: Always
                   resources:
                       requests:
-                          memory: 540Mi
+                          memory: 440Mi
                       limits:
-                          memory: 600Mi
+                          memory: 450Mi
                   env:
                   - name: WS_LINK_CHECKER_JVM_MEMORY_MAX
-                    value: "512m"
+                    value: "420m"
                   - name: WS_LINK_CHECKER_CONFIG_REDIS_HOST
                     value: "redis"
                   - name: WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST

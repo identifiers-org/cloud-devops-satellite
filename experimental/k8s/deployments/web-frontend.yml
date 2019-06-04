@@ -53,9 +53,11 @@ spec:
                             values:
                             - satellite
                       topologyKey: "kubernetes.io/hostname"
-                podAntiAffinity:
-                  requiredDuringSchedulingIgnoredDuringExecution:
-                    - labelSelector:
+              podAntiAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 50
+                    podAffinityTerm:
+                      labelSelector:
                         matchExpressions:
                         - key: environment
                           operator: In

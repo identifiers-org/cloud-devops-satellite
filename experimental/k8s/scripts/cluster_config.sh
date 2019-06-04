@@ -46,7 +46,7 @@ aws s3api put-bucket-versioning --bucket $kops_bucket_name  --versioning-configu
 # Create cluster configuration
 $KOPS create cluster --name=$cluster_name \
   --state=$KOPS_STATE_STORE --zones=$cluster_zones \
-  --node-count=3 --node-size=t3.small --master-size=t3.large
+  --node-count=3 --node-size=t3.medium --master-size=t3.large
 
 # Create cluster SSH public key
 logdevops "SSH Key Pair"

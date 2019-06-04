@@ -91,9 +91,9 @@ spec:
                   imagePullPolicy: Always
                   resources:
                       requests:
-                          memory: 640Mi
+                          memory: 520Mi
                       limits:
-                          memory: 660Mi
+                          memory: 540Mi
                   env:
                   - name: WS_METADATA_CONFIG_RESOLVER_HOST
                     value: "resolver"

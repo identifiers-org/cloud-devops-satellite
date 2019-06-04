@@ -19,14 +19,14 @@ spec:
                 app: redis
         spec:
             affinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                - weight: 1
-                  preference:
-                    matchExpressions:
-                      - key: node-reliability
-                        operator: In
-                        values:
-                          - stable
+                nodeAffinity:
+                    requiredDuringSchedulingIgnoredDuringExecution:
+                        nodeSelectorTerms:
+                            - matchExpressions:
+                              - key: node-reliability
+                                operator: In
+                                values:
+                                - stable
             containers:
                 - name: redis
                   image: redis:4.0.8-alpine

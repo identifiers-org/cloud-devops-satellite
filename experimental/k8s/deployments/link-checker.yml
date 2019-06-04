@@ -72,7 +72,9 @@ spec:
                   imagePullPolicy: Always
                   resources:
                       requests:
-                          memory: 640Mi
+                          memory: 540Mi
+                      limits:
+                          memory: 600Mi
                   env:
                   - name: WS_LINK_CHECKER_JVM_MEMORY_MAX
                     value: "512m"

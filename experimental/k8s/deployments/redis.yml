@@ -34,7 +34,7 @@ spec:
                   resources:
                       requests:
                           memory: 800Mi
-                      limit:
+                      limits:
                           memory: 900Mi
                   ports:
                   - containerPort: 6379

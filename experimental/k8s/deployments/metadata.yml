@@ -20,6 +20,71 @@ spec:
                 app: metadata
                 deployment: satellite
         spec:
+            affinity:
+              nodeAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 5
+                    preference:
+                      matchExpressions:
+                        - key: node-reliability
+                          operator: In
+                          values:
+                            - stable
+              podAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 100
+                    podAffinityTerm:
+                      labelSelector:
+                        matchExpressions:
+                          - key: environment
+                            operator: In
+                            values:
+                            - production
+                          - key: tier
+                            operator: In
+                            values:
+                            - backend
+                          - key: app
+                            operator: In
+                            values:
+                            - redis
+                      topologyKey: "kubernetes.io/hostname"
+                  - weight: 40
+                    podAffinityTerm:
+                      labelSelector:
+                        matchExpressions:
+                          - key: environment
+                            operator: In
+                            values:
+                            - production
+                          - key: tier
+                            operator: In
+                            values:
+                            - api
+                          - key: app
+                            operator: In
+                            values:
+                            - resolver
+                      topologyKey: "failure-domain.beta.kubernetes.io/zone"
+              podAntiAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 50
+                    podAffinityTerm:
+                      labelSelector:
+                        matchExpressions:
+                        - key: environment
+                          operator: In
+                          values:
+                          - production
+                        - key: tier
+                          operator: In
+                          values:
+                          - api
+                        - key: app
+                          operator: In
+                          values:
+                          - metadata
+                      topologyKey: "kubernetes.io/hostname"
             containers:
                 - name: cloud-ws-metadata
                   image: identifiersorg/cloud-ws-metadata:1.4.0

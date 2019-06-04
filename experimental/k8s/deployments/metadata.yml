@@ -1,0 +1,52 @@
+# Kubernetes deployment description for Identifiers.org Metadata Resolution API Service
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: metadata
+spec:
+    selector:
+        matchLabels:
+            environment: production
+            tier: api
+            app: metadata
+            deployment: satellite
+    replicas: 1
+    template:
+        metadata:
+            labels:
+                environment: production
+                tier: api
+                app: metadata
+                deployment: satellite
+        spec:
+            containers:
+                - name: cloud-ws-metadata
+                  image: identifiersorg/cloud-ws-metadata:1.4.0
+                  imagePullPolicy: Always
+                  resources:
+                      requests:
+                          memory: 1048Mi
+                  env:
+                  - name: WS_METADATA_CONFIG_RESOLVER_HOST
+                    value: "resolver"
+                  - name: WS_METADATA_CONFIG_RESOLVER_PORT
+                    value: "8080"
+                  - name: WS_METADATA_JVM_MEMORY_MAX
+                    value: "1024m"
+                  - name: WS_METADATA_CONFIG_REDIS_HOST
+                    value: "redis"
+                  ports:
+                  - containerPort: 8082
+                  readinessProbe:
+                      httpGet:
+                          path: /healthApi/readiness_check
+                          port: 8082
+                      initialDelaySeconds: 5
+                      periodSeconds: 10
+                  livenessProbe:
+                      httpGet:
+                          path: /healthApi/liveness_check
+                          port: 8082
+                      initialDelaySeconds: 5
+                      periodSeconds: 10

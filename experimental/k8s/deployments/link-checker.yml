@@ -1,0 +1,48 @@
+# Kubernetes deployment description for Identifiers.org Link Checker Service
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: link-checker
+spec:
+    selector:
+        matchLabels:
+            environment: production
+            tier: api
+            app: link-checker
+    replicas: 1
+    template:
+        metadata:
+            labels:
+                environment: production
+                tier: api
+                app: link-checker
+        spec:
+            containers:
+                - name: cloud-ws-link-checker
+                  image: identifiersorg/cloud-ws-link-checker:1.2.1
+                  imagePullPolicy: Always
+                  resources:
+                      requests:
+                          memory: 640Mi
+                  env:
+                  - name: WS_LINK_CHECKER_JVM_MEMORY_MAX
+                    value: "512m"
+                  - name: WS_LINK_CHECKER_CONFIG_REDIS_HOST
+                    value: "redis"
+                  - name: WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST
+                    value: "resolver"
+                  ports:
+                  - containerPort: 8084
+                  readinessProbe:
+                      httpGet:
+                          path: /healthApi/readiness_check
+                          port: 8084
+                      initialDelaySeconds: 5
+                      periodSeconds: 10
+                  livenessProbe:
+                      httpGet:
+                          path: /healthApi/liveness_check
+                          port: 8084
+                      initialDelaySeconds: 5
+                      periodSeconds: 10

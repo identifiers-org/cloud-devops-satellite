@@ -1,0 +1,90 @@
+# Kubernetes deployment description for Identifiers.org Compact ID Resolution API Service
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: resolver
+spec:
+    selector:
+        matchLabels:
+            environment: production
+            tier: api
+            app: resolver
+            deployment: satellite
+    replicas: 1
+    template:
+        metadata:
+            labels:
+                environment: production
+                tier: api
+                app: resolver
+                deployment: satellite
+        spec:
+            affinity:
+              nodeAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 1
+                    preference:
+                      matchExpressions:
+                        - key: node-reliability
+                          operator: In
+                          values:
+                            - stable
+              podAntiAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 1
+                    preference:
+                      matchExpressions:
+                      - key: environment
+                        operator: In
+                        values:
+                        - production
+                      - key: tier
+                        operator: In
+                        values:
+                        - api
+                      - key: app
+                        operator: In
+                        values:
+                        - resolver
+                      - key: deployment
+                        operator: In
+                        values:
+                        - satellite
+                    topologyKey: "kubernetes.io/hostname"
+            containers:
+                - name: cloud-ws-resolver
+                  image: identifiersorg/cloud-ws-resolver:2.0.3
+                  imagePullPolicy: Always
+                  resources:
+                      requests:
+                          memory: 640Mi
+                  env:
+                  - name: WS_RESOLVER_CONFIG_REDIS_HOST
+                    value: "redis"
+                  - name: WS_RESOLVER_CONFIG_REDIS_PORT
+                    value: "6379"
+                  - name: WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_HOST
+                    value: "resource-recommender"
+                  - name: WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_PORT
+                    value: "8083"
+                  - name: WS_RESOLVER_CONFIG_REGISTRY_RESOLUTION_DATASET_ENDPOINT
+                    value: "https://registry.api.identifiers.org/resolutionApi/getResolverDataset"
+                  - name: WS_RESOLVER_CONFIG_APPLICATION_CORS_ORIGINS
+                    value: "http://cloud.identifiers.org,https://cloud.identifiers.org,http://cloud.aws.identifiers.org,https://cloud.aws.identifiers.org,http://cloud.gcloud.identifiers.org,https://cloud.gcloud.identifiers.org,http://identifiers.org,https://identifiers.org"
+                  - name: WS_RESOLVER_JVM_MEMORY_MAX
+                    value: "512m"
+                  ports:
+                  - containerPort: 8080
+                  readinessProbe:
+                      httpGet:
+                          path: /healthApi/readiness_check
+                          port: 8080
+                      initialDelaySeconds: 5
+                      periodSeconds: 10
+                  livenessProbe:
+                      httpGet:
+                          path: /healthApi/liveness_check
+                          port: 8080
+                      initialDelaySeconds: 5
+                      periodSeconds: 10

@@ -33,25 +33,26 @@ spec:
               podAntiAffinity:
                 preferredDuringSchedulingIgnoredDuringExecution:
                   - weight: 1
-                    preference:
-                      matchExpressions:
-                      - key: environment
-                        operator: In
-                        values:
-                        - production
-                      - key: tier
-                        operator: In
-                        values:
-                        - api
-                      - key: app
-                        operator: In
-                        values:
-                        - resolver
-                      - key: deployment
-                        operator: In
-                        values:
-                        - satellite
-                    topologyKey: "kubernetes.io/hostname"
+                    podAffinityTerm:
+                      labelSelector:
+                        matchExpressions:
+                        - key: environment
+                          operator: In
+                          values:
+                          - production
+                        - key: tier
+                          operator: In
+                          values:
+                          - api
+                        - key: app
+                          operator: In
+                          values:
+                          - resolver
+                        - key: deployment
+                          operator: In
+                          values:
+                          - satellite
+                      topologyKey: "kubernetes.io/hostname"
             containers:
                 - name: cloud-ws-resolver
                   image: identifiersorg/cloud-ws-resolver:2.0.3

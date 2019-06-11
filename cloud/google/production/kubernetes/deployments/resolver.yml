@@ -22,7 +22,7 @@ spec:
         spec:
             containers:
                 - name: cloud-ws-resolver
-                  image: identifiersorg/cloud-ws-resolver:2.0.3
+                  image: identifiersorg/cloud-ws-resolver:2.0.4
                   imagePullPolicy: Always
                   resources:
                       requests:

@@ -1,2 +1,17 @@
 # This file defines an Horizontal Pod Autoscaler for the target deployment
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: resolver
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: resolver
+  minReplicas: 2
+  maxReplicas: 4
+  metrics:
+  - type: Resource
+    resource:
+      name: memory

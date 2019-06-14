@@ -91,16 +91,16 @@ spec:
                   imagePullPolicy: Always
                   resources:
                       requests:
-                          memory: 490Mi
+                          memory: 512Mi
                       limits:
-                          memory: 500Mi
+                          memory: 520Mi
                   env:
                   - name: WS_METADATA_CONFIG_RESOLVER_HOST
                     value: "resolver"
                   - name: WS_METADATA_CONFIG_RESOLVER_PORT
                     value: "8080"
                   - name: WS_METADATA_JVM_MEMORY_MAX
-                    value: "480m"
+                    value: "512m"
                   - name: WS_METADATA_CONFIG_REDIS_HOST
                     value: "redis"
                   ports:

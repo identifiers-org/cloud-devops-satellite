@@ -1,0 +1,2 @@
+# This file defines an Horizontal Pod Autoscaler for the target deployment
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>

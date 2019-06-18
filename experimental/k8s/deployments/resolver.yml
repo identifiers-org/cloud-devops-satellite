@@ -96,8 +96,10 @@ spec:
                   resources:
                       requests:
                           memory: 480Mi
+                          cpu: 100m
                       limits:
-                          memory: 500Mi
+                          memory: 480Mi
+                          cpu: 120m
                   env:
                   - name: WS_RESOLVER_CONFIG_REDIS_HOST
                     value: "redis"

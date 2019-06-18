@@ -73,8 +73,10 @@ spec:
                   resources:
                       requests:
                           memory: 440Mi
+                          cpu: 100m
                       limits:
                           memory: 450Mi
+                          cpu: 120m
                   env:
                   - name: WS_LINK_CHECKER_JVM_MEMORY_MAX
                     value: "420m"

@@ -74,7 +74,7 @@ spec:
                       requests:
                           memory: 440Mi
                       limits:
-                          memory: 450Mi
+                          memory: 440Mi
                   env:
                   - name: WS_RESOURCE_RECOMMENDER_JVM_MEMORY_MAX
                     value: "420m"

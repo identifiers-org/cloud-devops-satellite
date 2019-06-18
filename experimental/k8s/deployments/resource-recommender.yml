@@ -76,7 +76,6 @@ spec:
                           cpu: 200m
                       limits:
                           memory: 440Mi
-                          cpu: 350m
                   env:
                   - name: WS_RESOURCE_RECOMMENDER_JVM_MEMORY_MAX
                     value: "420m"

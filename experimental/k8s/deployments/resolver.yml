@@ -99,7 +99,7 @@ spec:
                           cpu: 100m
                       limits:
                           memory: 480Mi
-                          cpu: 120m
+                          cpu: 140m
                   env:
                   - name: WS_RESOLVER_CONFIG_REDIS_HOST
                     value: "redis"

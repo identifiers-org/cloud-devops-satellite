@@ -10,7 +10,7 @@ spec:
     kind: Deployment
     name: resolver
   minReplicas: 2
-  maxReplicas: 6
+  maxReplicas: 8
   metrics:
   - type: Resource
     resource:

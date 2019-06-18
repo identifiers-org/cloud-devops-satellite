@@ -8,7 +8,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: resolver
+    name: resource-recommender
   minReplicas: 1
   maxReplicas: 3
   metrics:

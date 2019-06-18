@@ -17,4 +17,4 @@ spec:
         tier: api
         app: resolver
         deployment: satellite
-type: LoadBalancer
+    type: LoadBalancer

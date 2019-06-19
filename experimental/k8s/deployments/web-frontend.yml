@@ -82,9 +82,9 @@ spec:
                   imagePullPolicy: Always
                   resources:
                       requests:
-                          memory: 500Mi
+                          memory: 420Mi
                       limits:
-                          memory: 512Mi
+                          memory: 440Mi
                   env:
                   - name: SATELLITE_WEB_SPA_CONFIG_WS_RESOLVER_HOST
                     value: "resolver"
@@ -107,7 +107,7 @@ spec:
                   - name: SATELLITE_WEB_SPA_CONFIG_CORS_ORIGIN
                     value: "http://identifiers.org,https://identifiers.org,http://cloud.identifiers.org,https://cloud.identifiers.org"
                   - name: WEB_SATELLITE_WS_JVM_MEMORY_MAX
-                    value: "500m"
+                    value: "420m"
                   ports:
                   - containerPort: 9090
                   readinessProbe:

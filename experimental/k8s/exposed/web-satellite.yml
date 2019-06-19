@@ -1,0 +1,21 @@
+# Kubernetes declaration of Identifiers.org Web Frontend (Level 4 Load Balancer)
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: v1
+kind: Service
+metadata:
+    name: ext-web-satellite
+    labels:
+        environment: production
+        tier: frontend
+        app: web-satellite
+        deployment: satellite
+spec:
+    ports:
+    - port: 80
+      targetPort: 9090
+    selector:
+        environment: production
+        tier: frontend
+        app: web-satellite
+        deployment: satellite
+    type: LoadBalancer

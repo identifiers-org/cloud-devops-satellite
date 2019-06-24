@@ -29,7 +29,7 @@ spec:
                   - weight: 5
                     preference:
                       matchExpressions:
-                        - key: node-reliability
+                        - key: iorg-node-reliability
                           operator: In
                           values:
                             - stable

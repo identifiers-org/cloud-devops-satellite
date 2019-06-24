@@ -18,6 +18,11 @@ spec:
                 tier: api
                 app: resource-recommender
         spec:
+            tolerations:
+            - key: "iorg-node-reliability-ephemeral-noschedule"
+              operator: "Equal"
+              value: "true"
+              effect: "NoSchedule"
             affinity:
               nodeAffinity:
                 preferredDuringSchedulingIgnoredDuringExecution:

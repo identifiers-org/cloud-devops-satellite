@@ -20,6 +20,11 @@ spec:
                 app: web-satellite
                 deployment: satellite
         spec:
+            tolerations:
+            - key: "iorg-node-reliability-ephemeral-noschedule"
+              operator: "Equal"
+              value: "true"
+              effect: "NoSchedule"
             affinity:
               nodeAffinity:
                 preferredDuringSchedulingIgnoredDuringExecution:

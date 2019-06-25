@@ -10,6 +10,7 @@ spec:
             environment: production
             tier: api
             app: link-checker
+            deployment: satellite
     replicas: 1
     template:
         metadata:
@@ -17,6 +18,7 @@ spec:
                 environment: production
                 tier: api
                 app: link-checker
+                deployment: satellite
         spec:
             tolerations:
             - key: "iorg-node-reliability-ephemeral-noschedule"
@@ -51,6 +53,10 @@ spec:
                             operator: In
                             values:
                             - redis
+                          - key: deployment
+                            operator: In
+                            values:
+                            - satellite
                       topologyKey: "kubernetes.io/hostname"
               podAntiAffinity:
                 preferredDuringSchedulingIgnoredDuringExecution:
@@ -70,6 +76,10 @@ spec:
                           operator: In
                           values:
                           - link-checker
+                        - key: deployment
+                            operator: In
+                            values:
+                            - satellite
                       topologyKey: "kubernetes.io/hostname"
             containers:
                 - name: cloud-ws-link-checker

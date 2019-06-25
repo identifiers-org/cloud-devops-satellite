@@ -8,6 +8,7 @@ metadata:
         environment: production
         tier: api
         app: link-checker
+        deployment: satellite
 spec:
     ports:
     - port: 8084
@@ -15,3 +16,4 @@ spec:
         environment: production
         tier: api
         app: link-checker
+        deployment: satellite

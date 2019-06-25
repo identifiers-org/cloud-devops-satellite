@@ -20,20 +20,102 @@ spec:
                 app: metadata
                 deployment: satellite
         spec:
+            tolerations:
+            - key: "iorg-node-reliability-ephemeral-noschedule"
+              operator: "Equal"
+              value: "true"
+              effect: "NoSchedule"
+            affinity:
+              nodeAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 5
+                    preference:
+                      matchExpressions:
+                        - key: iorg-node-reliability
+                          operator: In
+                          values:
+                            - stable
+              podAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 60
+                    podAffinityTerm:
+                      labelSelector:
+                        matchExpressions:
+                          - key: environment
+                            operator: In
+                            values:
+                            - production
+                          - key: tier
+                            operator: In
+                            values:
+                            - backend
+                          - key: app
+                            operator: In
+                            values:
+                            - redis
+                          - key: deployment
+                            operator: In
+                            values:
+                            - satellite
+                      topologyKey: "kubernetes.io/hostname"
+                  - weight: 30
+                    podAffinityTerm:
+                      labelSelector:
+                        matchExpressions:
+                          - key: environment
+                            operator: In
+                            values:
+                            - production
+                          - key: tier
+                            operator: In
+                            values:
+                            - api
+                          - key: app
+                            operator: In
+                            values:
+                            - resolver
+                          - key: deployment
+                            operator: In
+                            values:
+                            - satellite
+                      topologyKey: "failure-domain.beta.kubernetes.io/zone"
+              podAntiAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 50
+                    podAffinityTerm:
+                      labelSelector:
+                        matchExpressions:
+                        - key: environment
+                          operator: In
+                          values:
+                          - production
+                        - key: tier
+                          operator: In
+                          values:
+                          - api
+                        - key: app
+                          operator: In
+                          values:
+                          - metadata
+                        - key: deployment
+                            operator: In
+                            values:
+                            - satellite
+                      topologyKey: "kubernetes.io/hostname"
             containers:
                 - name: cloud-ws-metadata
                   image: identifiersorg/cloud-ws-metadata:1.4.0
                   imagePullPolicy: Always
                   resources:
                       requests:
-                          memory: 1048Mi
+                          memory: 640Mi
                   env:
                   - name: WS_METADATA_CONFIG_RESOLVER_HOST
                     value: "resolver"
                   - name: WS_METADATA_CONFIG_RESOLVER_PORT
                     value: "8080"
                   - name: WS_METADATA_JVM_MEMORY_MAX
-                    value: "1024m"
+                    value: "512m"
                   - name: WS_METADATA_CONFIG_REDIS_HOST
                     value: "redis"
                   ports:

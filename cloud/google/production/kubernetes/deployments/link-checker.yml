@@ -10,7 +10,7 @@ spec:
             environment: production
             tier: api
             app: link-checker
-    replicas: 2
+    replicas: 1
     template:
         metadata:
             labels:
@@ -18,16 +18,70 @@ spec:
                 tier: api
                 app: link-checker
         spec:
+            tolerations:
+            - key: "iorg-node-reliability-ephemeral-noschedule"
+              operator: "Equal"
+              value: "true"
+              effect: "NoSchedule"
+            affinity:
+              nodeAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 5
+                    preference:
+                      matchExpressions:
+                        - key: iorg-node-reliability
+                          operator: In
+                          values:
+                            - stable
+              podAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 70
+                    podAffinityTerm:
+                      labelSelector:
+                        matchExpressions:
+                          - key: environment
+                            operator: In
+                            values:
+                            - production
+                          - key: tier
+                            operator: In
+                            values:
+                            - backend
+                          - key: app
+                            operator: In
+                            values:
+                            - redis
+                      topologyKey: "kubernetes.io/hostname"
+              podAntiAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 50
+                    podAffinityTerm:
+                      labelSelector:
+                        matchExpressions:
+                        - key: environment
+                          operator: In
+                          values:
+                          - production
+                        - key: tier
+                          operator: In
+                          values:
+                          - api
+                        - key: app
+                          operator: In
+                          values:
+                          - link-checker
+                      topologyKey: "kubernetes.io/hostname"
             containers:
                 - name: cloud-ws-link-checker
                   image: identifiersorg/cloud-ws-link-checker:1.2.1
                   imagePullPolicy: Always
                   resources:
                       requests:
-                          memory: 640Mi
+                          memory: 440Mi
+                          cpu: 100m
                   env:
                   - name: WS_LINK_CHECKER_JVM_MEMORY_MAX
-                    value: "512m"
+                    value: "420m"
                   - name: WS_LINK_CHECKER_CONFIG_REDIS_HOST
                     value: "redis"
                   - name: WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST

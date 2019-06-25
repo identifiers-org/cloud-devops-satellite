@@ -10,6 +10,7 @@ spec:
             environment: production
             tier: backend
             app: redis
+            deployment: satellite
     replicas: 1
     template:
         metadata:
@@ -17,13 +18,23 @@ spec:
                 environment: production
                 tier: backend
                 app: redis
+                deployment: satellite
         spec:
+            affinity:
+                nodeAffinity:
+                    requiredDuringSchedulingIgnoredDuringExecution:
+                        nodeSelectorTerms:
+                            - matchExpressions:
+                              - key: iorg-node-reliability
+                                operator: In
+                                values:
+                                - stable
             containers:
                 - name: redis
                   image: redis:4.0.8-alpine
                   imagePullPolicy: Always
                   resources:
                       requests:
-                          memory: 1500Mi
+                          memory: 1280Mi
                   ports:
                   - containerPort: 6379

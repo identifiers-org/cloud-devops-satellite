@@ -10,24 +10,88 @@ spec:
             environment: production
             tier: api
             app: resource-recommender
-    replicas: 2
+            deployment: satellite
+    replicas: 1
     template:
         metadata:
             labels:
                 environment: production
                 tier: api
                 app: resource-recommender
+                deployment: satellite
         spec:
+            tolerations:
+            - key: "iorg-node-reliability-ephemeral-noschedule"
+              operator: "Equal"
+              value: "true"
+              effect: "NoSchedule"
+            affinity:
+              nodeAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 5
+                    preference:
+                      matchExpressions:
+                        - key: iorg-node-reliability
+                          operator: In
+                          values:
+                            - stable
+              podAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 70
+                    podAffinityTerm:
+                      labelSelector:
+                        matchExpressions:
+                          - key: environment
+                            operator: In
+                            values:
+                            - production
+                          - key: tier
+                            operator: In
+                            values:
+                            - api
+                          - key: app
+                            operator: In
+                            values:
+                            - link-checker
+                          - key: deployment
+                            operator: In
+                            values:
+                            - satellite
+                      topologyKey: "kubernetes.io/hostname"
+              podAntiAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 50
+                    podAffinityTerm:
+                      labelSelector:
+                        matchExpressions:
+                        - key: environment
+                          operator: In
+                          values:
+                          - production
+                        - key: tier
+                          operator: In
+                          values:
+                          - api
+                        - key: app
+                          operator: In
+                          values:
+                          - resource-recommender
+                        - key: deployment
+                          operator: In
+                          values:
+                          - satellite
+                      topologyKey: "kubernetes.io/hostname"
             containers:
                 - name: cloud-ws-resource-recommender
                   image: identifiersorg/cloud-ws-resource-recommender:1.1.1
                   imagePullPolicy: Always
                   resources:
                       requests:
-                          memory: 640Mi
+                          memory: 440Mi
+                          cpu: 200m
                   env:
                   - name: WS_RESOURCE_RECOMMENDER_JVM_MEMORY_MAX
-                    value: "512m"
+                    value: "420m"
                   - name: WS_RESOURCE_RECOMMENDER_CONFIG_BACKEND_SERVICE_LINK_CHECKER_HOST
                     value: link-checker
                   ports:

@@ -8,6 +8,7 @@ metadata:
         environment: production
         tier: api
         app: resource-recommender
+        deployment: satellite
 spec:
     ports:
     - port: 8083
@@ -15,3 +16,4 @@ spec:
         environment: production
         tier: api
         app: resource-recommender
+        deployment: satellite

@@ -109,7 +109,7 @@ spec:
                   - name: SATELLITE_WEB_SPA_CONFIG_FLAG_SHOW_SEARCH_SUGGESTIONS
                     value: "true"
                   - name: SATELLITE_WEB_SPA_CONFIG_CORS_ORIGIN
-                    value: "http://identifiers.org,https://identifiers.org,http://cloud.identifiers.org,https://cloud.identifiers.org"
+                    value: "http://labs.identifiers.org,https://labs.identifiers.org"
                   - name: WEB_SATELLITE_WS_JVM_MEMORY_MAX
                     value: "420m"
                   ports:

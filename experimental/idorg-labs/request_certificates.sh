@@ -1,4 +1,4 @@
 #!/bin/bash
-gcloud beta compute ssl-certificates create cert-iorg-sat-prod-resolver --domains resolver.api.identifiers.org
-gcloud beta compute ssl-certificates create cert-iorg-sat-prod-metadata --domains metadata.api.identifiers.org
-gcloud beta compute ssl-certificates create cert-iorg-sat-prod-web --domains cloud.identifiers.org
+gcloud beta compute ssl-certificates create idorg-labs-satellite-api-resolver --domains resolver.api.labs.identifiers.org
+gcloud beta compute ssl-certificates create idorg-labs-satellite-api-metadata --domains metadata.api.labs.identifiers.org
+gcloud beta compute ssl-certificates create idorg-labs-satellite-web --domains cloud.labs.identifiers.org

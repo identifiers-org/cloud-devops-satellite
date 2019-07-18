@@ -10,33 +10,27 @@ metadata:
         app: satellite-deployment
     annotations:
         kubernetes.io/ingress.class: "gce"
-        kubernetes.io/ingress.global-static-ip-name: ipaddr-iorg-satellite-production
-        ingress.gcp.kubernetes.io/pre-shared-cert: 'cert-iorg-sat-prod-resolver,cert-iorg-sat-prod-metadata,cert-iorg-sat-prod-web,cert-iorg-sat-prod-web-main2'
+        kubernetes.io/ingress.global-static-ip-name: idorg-labs-satellite-ingress
+        ingress.gcp.kubernetes.io/pre-shared-cert: 'idorg-labs-satellite-api-resolver,idorg-labs-satellite-api-metadata,idorg-labs-satellite-web'
         kubernetes.io/ingress.allow-http: "true"
 spec:
     rules:
     # Resolver rules
-    - host: resolver.api.identifiers.org
+    - host: resolver.api.labs.identifiers.org
       http:
           paths:
               - backend:
                   serviceName: nodeport-resolver
                   servicePort: 8080
     # Metadata Service rules
-    - host: metadata.api.identifiers.org
+    - host: metadata.api.labs.identifiers.org
       http:
           paths:
               - backend:
                   serviceName: nodeport-metadata
                   servicePort: 8082
     # Web Frontend rules
-    - host: cloud.identifiers.org
-      http:
-          paths:
-              - backend:
-                  serviceName: nodeport-web-satellite
-                  servicePort: 80
-    - host: identifiers.org
+    - host: labs.identifiers.org
       http:
           paths:
               - backend:

@@ -98,9 +98,9 @@ spec:
                           values:
                           - metadata
                         - key: deployment
-                            operator: In
-                            values:
-                            - satellite
+                          operator: In
+                          values:
+                          - satellite
                       topologyKey: "kubernetes.io/hostname"
             containers:
                 - name: cloud-ws-metadata

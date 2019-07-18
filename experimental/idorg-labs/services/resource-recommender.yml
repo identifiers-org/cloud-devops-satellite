@@ -1,0 +1,19 @@
+# Kubernetes declaration of Identifiers.org Resource Recommender API Service
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: v1
+kind: Service
+metadata:
+    name: resource-recommender
+    labels:
+        environment: production
+        tier: api
+        app: resource-recommender
+        deployment: satellite
+spec:
+    ports:
+    - port: 8083
+    selector:
+        environment: production
+        tier: api
+        app: resource-recommender
+        deployment: satellite

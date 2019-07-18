@@ -1,0 +1,128 @@
+# Kubernetes deployment description for Identifiers.org Satellite Web Frontend
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: web-satellite
+spec:
+    selector:
+        matchLabels:
+            environment: production
+            tier: frontend
+            app: web-satellite
+            deployment: satellite
+    replicas: 1
+    template:
+        metadata:
+            labels:
+                environment: production
+                tier: frontend
+                app: web-satellite
+                deployment: satellite
+        spec:
+            tolerations:
+            - key: "iorg-node-reliability-ephemeral-noschedule"
+              operator: "Equal"
+              value: "true"
+              effect: "NoSchedule"
+            affinity:
+              nodeAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 1
+                    preference:
+                      matchExpressions:
+                        - key: iorg-node-reliability
+                          operator: In
+                          values:
+                            - stable
+              podAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 100
+                    podAffinityTerm:
+                      labelSelector:
+                        matchExpressions:
+                          - key: environment
+                            operator: In
+                            values:
+                            - production
+                          - key: tier
+                            operator: In
+                            values:
+                            - api
+                          - key: app
+                            operator: In
+                            values:
+                            - resolver
+                          - key: deployment
+                            operator: In
+                            values:
+                            - satellite
+                      topologyKey: "kubernetes.io/hostname"
+              podAntiAffinity:
+                preferredDuringSchedulingIgnoredDuringExecution:
+                  - weight: 50
+                    podAffinityTerm:
+                      labelSelector:
+                        matchExpressions:
+                        - key: environment
+                          operator: In
+                          values:
+                          - production
+                        - key: tier
+                          operator: In
+                          values:
+                          - frontend
+                        - key: app
+                          operator: In
+                          values:
+                          - web-satellite
+                        - key: deployment
+                          operator: In
+                          values:
+                          - satellite
+                      topologyKey: "kubernetes.io/hostname"
+            containers:
+                - name: cloud-web-frontend
+                  image: identifiersorg/cloud-satellite-web-spa:0.1.8
+                  imagePullPolicy: Always
+                  resources:
+                      requests:
+                          memory: 420Mi
+                          cpu: 100m
+                  env:
+                  - name: SATELLITE_WEB_SPA_CONFIG_WS_RESOLVER_HOST
+                    value: "resolver"
+                  - name: SATELLITE_WEB_SPA_CONFIG_WS_RESOLVER_PORT
+                    value: "8080"
+                  - name: SATELLITE_WEB_SPA_CONFIG_WS_RESOLVER_SCHEMA
+                    value: "http"
+                  - name: SATELLITE_WEB_SPA_CONFIG_WS_RESOLVER_URL
+                    value: "https://resolver.api.identifiers.org"
+                  - name: SATELLITE_WEB_SPA_CONFIG_WS_HQ_REGISTRY_URL
+                    value: "https://registry.api.identifiers.org"
+                  - name: SATELLITE_WEB_SPA_CONFIG_WS_API_VERSION
+                    value: "1.0"
+                  - name: SATELLITE_WEB_SPA_CONFIG_WEB_HQ_REGISTRY_URL
+                    value: "https://registry.identifiers.org"
+                  - name: SATELLITE_WEB_SPA_CONFIG_WEB_HQ_REGISTRY_PREFIX_REGISTRATION_FORM_URL
+                    value: "https://registry.identifiers.org/prefixregistrationrequest"
+                  - name: SATELLITE_WEB_SPA_CONFIG_FLAG_SHOW_SEARCH_SUGGESTIONS
+                    value: "true"
+                  - name: SATELLITE_WEB_SPA_CONFIG_CORS_ORIGIN
+                    value: "http://identifiers.org,https://identifiers.org,http://cloud.identifiers.org,https://cloud.identifiers.org"
+                  - name: WEB_SATELLITE_WS_JVM_MEMORY_MAX
+                    value: "420m"
+                  ports:
+                  - containerPort: 9090
+                  readinessProbe:
+                      httpGet:
+                          path: /healthApi/readiness_check
+                          port: 9090
+                      initialDelaySeconds: 5
+                      periodSeconds: 10
+                  livenessProbe:
+                      httpGet:
+                          path: /healthApi/liveness_check
+                          port: 9090
+                      initialDelaySeconds: 5
+                      periodSeconds: 10

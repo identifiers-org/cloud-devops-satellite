@@ -1,0 +1,20 @@
+# This file defines an Horizontal Pod Autoscaler for the target deployment
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: link-checker
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: link-checker
+  minReplicas: 3
+  maxReplicas: 6
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 80

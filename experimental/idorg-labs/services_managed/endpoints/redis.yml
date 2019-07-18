@@ -1,0 +1,13 @@
+# Managed Redis Endpoint for Google Cloud
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+#
+# TODO - This script shows up the need to parameterize some elements, e.g. IP address of Redis.
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: redis
+subsets:
+  - addresses:
+      - ip: 10.0.0.4
+    ports:
+      - port: 6379

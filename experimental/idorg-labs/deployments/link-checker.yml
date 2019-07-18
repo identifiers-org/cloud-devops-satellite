@@ -83,7 +83,7 @@ spec:
                       topologyKey: "kubernetes.io/hostname"
             containers:
                 - name: cloud-ws-link-checker
-                  image: identifiersorg/cloud-ws-link-checker:1.2.1
+                  image: identifiersorg/cloud-ws-link-checker:1.2.2
                   imagePullPolicy: Always
                   resources:
                       requests:

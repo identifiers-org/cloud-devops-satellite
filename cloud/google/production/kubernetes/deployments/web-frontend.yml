@@ -83,7 +83,7 @@ spec:
                       topologyKey: "kubernetes.io/hostname"
             containers:
                 - name: cloud-web-frontend
-                  image: identifiersorg/cloud-satellite-web-spa:0.5.0
+                  image: identifiersorg/cloud-satellite-web-spa:0.5.1
                   imagePullPolicy: Always
                   resources:
                       requests:

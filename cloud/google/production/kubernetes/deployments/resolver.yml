@@ -104,7 +104,7 @@ spec:
                       topologyKey: "kubernetes.io/hostname"
             containers:
                 - name: cloud-ws-resolver
-                  image: identifiersorg/cloud-ws-resolver:2.2.3
+                  image: identifiersorg/cloud-ws-resolver:2.2.6
                   imagePullPolicy: Always
                   resources:
                       requests:

@@ -104,7 +104,7 @@ spec:
                       topologyKey: "kubernetes.io/hostname"
             containers:
                 - name: cloud-ws-metadata
-                  image: identifiersorg/cloud-ws-metadata:1.4.1
+                  image: identifiersorg/cloud-ws-metadata:1.4.2
                   imagePullPolicy: Always
                   resources:
                       requests:

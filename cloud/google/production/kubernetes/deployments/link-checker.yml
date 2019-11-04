@@ -98,7 +98,7 @@ spec:
                     value: "resolver"
                   # Keep link checking history for only 3 days
                   - name: WS_LINK_CHECKER_CONFIG_BACKEND_DATA_LINK_CHECK_RESULTS_TTL_SECONDS
-                    value: "259200"
+                    value: "129600"
                   ports:
                   - containerPort: 8084
                   readinessProbe:

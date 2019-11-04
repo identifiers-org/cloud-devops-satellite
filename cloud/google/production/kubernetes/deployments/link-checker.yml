@@ -11,7 +11,7 @@ spec:
             tier: api
             app: link-checker
             deployment: satellite
-    replicas: 1
+    replicas: 2
     template:
         metadata:
             labels:
@@ -96,7 +96,7 @@ spec:
                     value: "redis"
                   - name: WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST
                     value: "resolver"
-                  # Keep link checking history for only 3 days
+                  # Keep link checking history for only 1.5 days
                   - name: WS_LINK_CHECKER_CONFIG_BACKEND_DATA_LINK_CHECK_RESULTS_TTL_SECONDS
                     value: "129600"
                   ports:

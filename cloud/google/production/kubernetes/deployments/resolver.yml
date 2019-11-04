@@ -11,7 +11,7 @@ spec:
             tier: api
             app: resolver
             deployment: satellite
-    replicas: 1
+    replicas: 2
     template:
         metadata:
             labels:

@@ -11,7 +11,7 @@ spec:
             tier: api
             app: link-checker
             deployment: satellite
-    replicas: 2
+    replicas: 1
     template:
         metadata:
             labels:

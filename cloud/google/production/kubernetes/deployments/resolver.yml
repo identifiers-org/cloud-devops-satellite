@@ -108,7 +108,7 @@ spec:
                   imagePullPolicy: Always
                   resources:
                       requests:
-                          memory: 480Mi
+                          memory: 360Mi
                           cpu: 100m
                   env:
                   - name: WS_RESOLVER_CONFIG_REDIS_HOST
@@ -124,7 +124,7 @@ spec:
                   - name: WS_RESOLVER_CONFIG_APPLICATION_CORS_ORIGINS
                     value: "http://cloud.identifiers.org,https://cloud.identifiers.org,http://cloud.aws.identifiers.org,https://cloud.aws.identifiers.org,http://cloud.gcloud.identifiers.org,https://cloud.gcloud.identifiers.org,http://identifiers.org,https://identifiers.org"
                   - name: WS_RESOLVER_JVM_MEMORY_MAX
-                    value: "480m"
+                    value: "360m"
                   ports:
                   - containerPort: 8080
                   readinessProbe:

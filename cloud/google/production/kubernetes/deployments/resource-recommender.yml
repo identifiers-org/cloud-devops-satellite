@@ -87,11 +87,11 @@ spec:
                   imagePullPolicy: Always
                   resources:
                       requests:
-                          memory: 440Mi
-                          cpu: 200m
+                          memory: 360Mi
+                          cpu: 150m
                   env:
                   - name: WS_RESOURCE_RECOMMENDER_JVM_MEMORY_MAX
-                    value: "420m"
+                    value: "360m"
                   - name: WS_RESOURCE_RECOMMENDER_CONFIG_BACKEND_SERVICE_LINK_CHECKER_HOST
                     value: link-checker
                   ports:

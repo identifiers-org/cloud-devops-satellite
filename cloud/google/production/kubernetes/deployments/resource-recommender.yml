@@ -11,7 +11,7 @@ spec:
             tier: api
             app: resource-recommender
             deployment: satellite
-    replicas: 2
+    replicas: 1
     template:
         metadata:
             labels:

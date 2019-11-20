@@ -122,7 +122,8 @@ spec:
                   - name: WS_RESOLVER_CONFIG_REGISTRY_RESOLUTION_DATASET_ENDPOINT
                     value: "https://registry.api.identifiers.org/resolutionApi/getResolverDataset"
                   - name: WS_RESOLVER_CONFIG_APPLICATION_CORS_ORIGINS
-                    value: "http://cloud.identifiers.org,https://cloud.identifiers.org,http://cloud.aws.identifiers.org,https://cloud.aws.identifiers.org,http://cloud.gcloud.identifiers.org,https://cloud.gcloud.identifiers.org,http://identifiers.org,https://identifiers.org"
+                    #value: "http://cloud.identifiers.org,https://cloud.identifiers.org,http://cloud.aws.identifiers.org,https://cloud.aws.identifiers.org,http://cloud.gcloud.identifiers.org,https://cloud.gcloud.identifiers.org,http://identifiers.org,https://identifiers.org"
+                    value: "*"
                   - name: WS_RESOLVER_JVM_MEMORY_MAX
                     value: "360m"
                   ports:

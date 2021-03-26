@@ -1,0 +1,20 @@
+# This file defines an Horizontal Pod Autoscaler for the target deployment
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: sparql
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: sparql
+  minReplicas: 3
+  maxReplicas: 9
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 80

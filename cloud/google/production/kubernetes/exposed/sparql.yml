@@ -1,0 +1,19 @@
+# Kubernetes declaration of Identifiers.org Compact ID Sparql API Service - EXPOSED
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: v1
+kind: Service
+metadata:
+    name: ext-sparql
+    labels:
+        environment: production
+        tier: api
+        app: sparql
+spec:
+    ports:
+    - port: 80
+      targetPort: 8080
+    selector:
+        environment: production
+        tier: api
+        app: sparql
+    type: LoadBalancer

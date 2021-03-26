@@ -11,7 +11,7 @@ metadata:
     annotations:
         kubernetes.io/ingress.class: "gce"
         kubernetes.io/ingress.global-static-ip-name: idorg-satellite
-        ingress.gcp.kubernetes.io/pre-shared-cert: 'cert-iorg-sat-prod-resolver,cert-iorg-sat-prod-metadata,cert-iorg-sat-prod-web,cert-iorg-sat-prod-web-main2'
+        ingress.gcp.kubernetes.io/pre-shared-cert: 'cert-iorg-sat-prod-resolver,cert-iorg-sat-prod-metadata,cert-iorg-sat-prod-web,cert-iorg-sat-prod-web-main2,cert-iorg-sat-prod-sparql'
         kubernetes.io/ingress.allow-http: "true"
 spec:
     rules:

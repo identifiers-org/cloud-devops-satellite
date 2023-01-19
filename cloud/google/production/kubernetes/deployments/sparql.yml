@@ -3,46 +3,109 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: sparql
+  name: sparql
 spec:
-    selector:
-        matchLabels:
-            environment: production
-            tier: api
-            app: sparql
-            deployment: satellite
-    replicas: 2
-    template:
-        metadata:
-            labels:
-                environment: production
-                tier: api
-                app: sparql
-                deployment: satellite
-        spec:
-            tolerations:
-            - key: "iorg-node-reliability-ephemeral-noschedule"
-              operator: "Equal"
-              value: "true"
-              effect: "NoSchedule"
-            affinity:
-              nodeAffinity:
-                preferredDuringSchedulingIgnoredDuringExecution:
-                  - weight: 5
-                    preference:
-                      matchExpressions:
-                        - key: iorg-node-reliability
-                          operator: In
-                          values:
-                            - stable
-            containers:
-                - name: sparql-identifiers
-                  image: jerven/sparql-identifiers
-                  imagePullPolicy: Always
-                  resources:
-                      requests:
-                          memory: 360Mi
-                          cpu: 100m
-                  ports:
-                  - containerPort: 8080
+  selector:
+    matchLabels:
+      environment: production
+      tier: api
+      app: sparql
+      deployment: satellite
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        environment: production
+        tier: api
+        app: sparql
+        deployment: satellite
+    spec:
+      tolerations:
+        - key: "iorg-node-reliability-ephemeral-noschedule"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 5
+              preference:
+                matchExpressions:
+                  - key: iorg-node-reliability
+                    operator: In
+                    values:
+                      - stable
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: environment
+                      operator: In
+                      values:
+                        - production
+                    - key: tier
+                      operator: In
+                      values:
+                        - backend
+                    - key: app
+                      operator: In
+                      values:
+                        - redis
+                    - key: deployment
+                      operator: In
+                      values:
+                        - satellite
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+            - podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: environment
+                      operator: In
+                      values:
+                        - production
+                    - key: tier
+                      operator: In
+                      values:
+                        - api
+                    - key: deployment
+                      operator: In
+                      values:
+                        - satellite
+                topologyKey: kubernetes.io/hostname
+              weight: 30
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: environment
+                      operator: In
+                      values:
+                        - production
+                    - key: tier
+                      operator: In
+                      values:
+                        - api
+                    - key: app
+                      operator: In
+                      values:
+                        - sparql
+                    - key: deployment
+                      operator: In
+                      values:
+                        - satellite
+                topologyKey: kubernetes.io/hostname
+              weight: 50
+      containers:
+        - name: sparql-identifiers
+          image: jerven/sparql-identifiers
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: 360Mi
+              cpu: 100m
+          ports:
+            - containerPort: 8080
                   

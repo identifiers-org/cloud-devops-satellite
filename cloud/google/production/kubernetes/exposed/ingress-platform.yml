@@ -1,51 +1,67 @@
 # Identifiers.org satellite platform ingress controller
 # Author: Manuel Bernal Llinares <mbdebian@gmail.com>
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-    name: satellite-deployment
-    labels:
-        environment: production
-        tier: api
-        app: satellite-deployment
-    annotations:
-        kubernetes.io/ingress.class: "gce"
-        kubernetes.io/ingress.global-static-ip-name: idorg-satellite
-        ingress.gcp.kubernetes.io/pre-shared-cert: 'cert-iorg-sat-prod-resolver,cert-iorg-sat-prod-metadata,cert-iorg-sat-prod-web,cert-iorg-sat-prod-web-main2,cert-iorg-sat-prod-sparql'
-        kubernetes.io/ingress.allow-http: "true"
+  name: satellite-deployment
+  labels:
+    environment: production
+    tier: api
+    app: satellite-deployment
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: idorg-satellite
+    ingress.gcp.kubernetes.io/pre-shared-cert: 'cert-iorg-sat-prod-metadata,cert-iorg-sat-prod-resolver,cert-iorg-sat-prod-sparql,cert-iorg-sat-prod-web,cert-iorg-sat-prod-web-main2'
+    # ingress.gcp.kubernetes.io/pre-shared-cert: 'cert-iorg-sat-prod-resolver,cert-iorg-sat-prod-metadata,cert-iorg-sat-prod-web,cert-iorg-sat-prod-web-main2,cert-iorg-sat-prod-sparql'
+    kubernetes.io/ingress.allow-http: "true"
 spec:
-    rules:
+  rules:
     # Resolver rules
     - host: resolver.api.identifiers.org
       http:
-          paths:
-              - backend:
-                  serviceName: nodeport-resolver
-                  servicePort: 8080
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: nodeport-resolver
+                port:
+                  number: 8080
     # Sparql rules
     - host: sparql.api.identifiers.org
       http:
-          paths:
-              - backend:
-                  serviceName: nodeport-sparql
-                  servicePort: 8080
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: nodeport-sparql
+                port:
+                  number: 8080
     # Metadata Service rules
     - host: metadata.api.identifiers.org
       http:
-          paths:
-              - backend:
-                  serviceName: nodeport-metadata
-                  servicePort: 8082
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: nodeport-metadata
+                port:
+                  number: 8082
     # Web Frontend rules
     - host: cloud.identifiers.org
       http:
-          paths:
-              - backend:
-                  serviceName: nodeport-web-satellite
-                  servicePort: 80
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: nodeport-web-satellite
+                port:
+                  number: 80
     - host: identifiers.org
       http:
-          paths:
-              - backend:
-                  serviceName: nodeport-web-satellite
-                  servicePort: 80
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: nodeport-web-satellite
+                port:
+                  number: 80

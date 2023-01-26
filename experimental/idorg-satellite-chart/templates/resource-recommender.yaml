@@ -1,0 +1,62 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "resource-recommender"
+  labels:
+    tier: api
+    component: "resource-recommender"
+    app: {{ .Values.app | quote }}
+    deployment: {{ .Values.deployment | quote }}
+spec:
+  selector:
+    matchLabels:
+      tier: api
+      component: "resource-recommender"
+      {{- (include "common_labels" .) | indent 6 }}
+  replicas: {{ .Values.resource_recommender.replicas }}
+  template:
+    metadata:
+      labels:
+        tier: api
+        component: "resource-recommender"
+        {{- (include "common_labels" .) | indent 8}}
+    spec:
+      tolerations:
+        - key: "iorg-node-reliability-ephemeral-noschedule"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
+      {{- (include "affinity_requirements" .) | indent 6 }}
+      containers:
+        - name: "cloud-ws-resource-recommender"
+          image: {{ .Values.resource_recommender.image }}
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: {{ .Values.resource_recommender.requests.memory }}
+              cpu: {{ .Values.resource_recommender.requests.cpu }}
+          env:
+            - name: WS_RESOURCE_RECOMMENDER_JVM_MEMORY_MAX
+              value: {{ .Values.resource_recommender.requests.memory | lower | trimSuffix "i" | quote }}
+            - name: WS_RESOURCE_RECOMMENDER_CONFIG_BACKEND_SERVICE_LINK_CHECKER_HOST
+              value: link-checker
+          ports:
+            - containerPort: {{ .Values.resource_recommender.port }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "resource-recommender"
+  labels:
+    tier: api
+    component: "resource-recommender"
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.resource_recommender.port }}
+  selector:
+    tier: api
+    component: "resource-recommender"
+    {{- (include "common_labels" .) | indent 4 }}
+---

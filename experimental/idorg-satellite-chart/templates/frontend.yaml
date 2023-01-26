@@ -1,0 +1,94 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-satellite
+  labels:
+    app: {{.Values.app | quote}}
+    deployment: {{.Values.deployment | quote}}
+    component: redis
+    tier: backend
+spec:
+  selector:
+    matchLabels:
+      tier: frontend
+      component: web-satellite
+      {{- (include "common_labels" .) | indent 6 }}
+  replicas: {{ .Values.frontend.replicas }}
+  template:
+    metadata:
+      labels:
+        tier: frontend
+        component: web-satellite
+        {{- (include "common_labels" .) | indent 8 }}
+    spec:
+      tolerations:
+        - key: "iorg-node-reliability-ephemeral-noschedule"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
+      {{- (include "affinity_requirements" .) | indent 6 }}
+      containers:
+        - name: cloud-web-frontend
+          image: {{ .Values.frontend.image }}
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: {{ .Values.frontend.requests.memory }}
+              cpu: {{ .Values.frontend.requests.cpu }}
+          env:
+            - name: SATELLITE_WEB_SPA_CONFIG_WS_RESOLVER_HOST
+              value: "resolver"
+            - name: SATELLITE_WEB_SPA_CONFIG_WS_RESOLVER_PORT
+              value: {{ .Values.resolver.port | quote }}
+            - name: SATELLITE_WEB_SPA_CONFIG_WS_RESOLVER_SCHEMA
+              value: "http"
+            - name: SATELLITE_WEB_SPA_CONFIG_WS_RESOLVER_URL
+              value: {{ .Values.resolver.url | quote }}
+            - name: SATELLITE_WEB_SPA_CONFIG_WS_HQ_REGISTRY_URL
+              value: {{ .Values.registry.api_url | quote }}
+            - name: SATELLITE_WEB_SPA_CONFIG_WS_API_VERSION
+              value: "1.0"
+            - name: SATELLITE_WEB_SPA_CONFIG_WEB_HQ_REGISTRY_URL
+              value: {{ .Values.registry.url | quote }}
+            - name: SATELLITE_WEB_SPA_CONFIG_WEB_HQ_REGISTRY_PREFIX_REGISTRATION_FORM_URL
+              value: {{ .Values.registry.registration_url | quote }}
+            - name: SATELLITE_WEB_SPA_CONFIG_FLAG_SHOW_SEARCH_SUGGESTIONS
+              value: "true"
+            - name: SATELLITE_WEB_SPA_CONFIG_CORS_ORIGIN
+              value: {{ .Values.frontend.cors_origins | quote }}
+            - name: WEB_SATELLITE_WS_JVM_MEMORY_MAX
+              value: {{ .Values.frontend.requests.memory | lower | trimSuffix "i" | quote }}
+          ports:
+            - containerPort: {{ .Values.frontend.port }}
+          readinessProbe:
+            httpGet:
+              path: /healthApi/readiness_check
+              port: {{ .Values.frontend.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthApi/liveness_check
+              port: {{ .Values.frontend.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeport-web-satellite
+  labels:
+    tier: frontend
+    component: web-satellite
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  ports:
+    - port: 80
+      targetPort: {{ .Values.frontend.port }}
+  selector:
+    tier: frontend
+    component: web-satellite
+    {{- (include "common_labels" .) | indent 4 }}
+  type: NodePort
+---

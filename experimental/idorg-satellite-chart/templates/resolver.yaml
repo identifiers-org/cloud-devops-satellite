@@ -1,0 +1,101 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resolver
+  labels:
+    app: {{.Values.app | quote}}
+    deployment: {{.Values.deployment | quote}}
+    component: resolver
+    tier: api
+spec:
+  selector:
+    matchLabels:
+      tier: api
+      component: resolver
+      {{- (include "common_labels" .) | indent 6 }}
+  replicas: {{ .Values.resolver.replicas }}
+  template:
+    metadata:
+      labels:
+        tier: api
+        component: resolver
+        {{- (include "common_labels" .) | indent 8 }}
+    spec:
+      tolerations:
+        - key: "iorg-node-reliability-ephemeral-noschedule"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
+      {{- (include "affinity_requirements" .) | indent 6 }}
+      containers:
+        - name: cloud-ws-resolver
+          image: {{ .Values.resolver.image }}
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: {{ .Values.resolver.requests.memory }}
+              cpu: {{ .Values.resolver.requests.cpu }}
+          env:
+            - name: WS_RESOLVER_CONFIG_REDIS_HOST
+              value: "redis"
+            - name: WS_RESOLVER_CONFIG_REDIS_PORT
+              value: "6379"
+            - name: WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_HOST
+              value: "resource-recommender"
+            - name: WS_RESOLVER_CONFIG_RESOURCE_RECOMMENDER_PORT
+              value: {{ .Values.resource_recommender.port | quote }}
+            - name: WS_RESOLVER_CONFIG_REGISTRY_RESOLUTION_DATASET_ENDPOINT
+              value: {{ .Values.registry.dataset_url | quote }}
+            - name: WS_RESOLVER_CONFIG_APPLICATION_CORS_ORIGINS
+              value: {{ .Values.resolver.cors_origins | quote }}
+            - name: WS_RESOLVER_JVM_MEMORY_MAX
+              value: {{ .Values.resolver.requests.memory | lower | trimSuffix "i" | quote }}
+          ports:
+            - containerPort: {{ .Values.resolver.port }}
+          readinessProbe:
+            httpGet:
+              path: /healthApi/readiness_check
+              port: {{ .Values.resolver.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthApi/liveness_check
+              port: {{ .Values.resolver.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: resolver
+  labels:
+    tier: api
+    component: resolver
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.resolver.port }}
+  selector:
+    tier: api
+    component: resolver
+    {{- (include "common_labels" .) | indent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeport-resolver
+  labels:
+    tier: api
+    component: resolver
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.resolver.port }}
+  selector:
+    tier: api
+    component: resolver
+    {{- (include "common_labels" .) | indent 4 }}
+  type: NodePort
+---

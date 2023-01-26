@@ -1,0 +1,66 @@
+# Identifiers.org satellite platform ingress controller
+# Author: Manuel Bernal Llinares <mbdebian@gmail.com>
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.deployment }}-ingress
+  labels:
+    tier: devops
+    {{- (include "common_labels" .) | indent 4 }}
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: {{ .Values.ingress.static_ip_name }}
+    ingress.gcp.kubernetes.io/pre-shared-cert: {{ .Values.ingress.pre_shared_cert }}
+    # ingress.gcp.kubernetes.io/pre-shared-cert: 'cert-iorg-sat-prod-resolver,cert-iorg-sat-prod-metadata,cert-iorg-sat-prod-web,cert-iorg-sat-prod-web-main2,cert-iorg-sat-prod-sparql'
+    kubernetes.io/ingress.allow-http: {{ .Values.ingress.allow_http | quote }}
+spec:
+  rules:
+    # Resolver rules
+    - host: resolver.api.identifiers.org
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: nodeport-resolver
+                port:
+                  number: {{ .Values.resolver.port }}
+    # Sparql rules
+    - host: sparql.api.identifiers.org
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: nodeport-sparql
+                port:
+                  number: {{ .Values.sparql.port }}
+    # Metadata Service rules
+    - host: metadata.api.identifiers.org
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: nodeport-metadata
+                port:
+                  number: {{ .Values.metadata.port }}
+    # Web Frontend rules
+    - host: cloud.identifiers.org
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: nodeport-web-satellite
+                port:
+                  number: 80
+    - host: identifiers.org
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: nodeport-web-satellite
+                port:
+                  number: 80

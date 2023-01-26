@@ -1,0 +1,78 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: link-checker
+  labels:
+    app: {{ .Values.app | quote }}
+    deployment: {{ .Values.deployment | quote }}
+    component: link-checker
+    tier: api
+spec:
+  selector:
+    matchLabels:
+      tier: api
+      component: link-checker
+      {{- (include "common_labels" .) | indent 6 }}
+  replicas: {{ .Values.link_checker.replicas }}
+  template:
+    metadata:
+      labels:
+        tier: api
+        component: link-checker
+        {{- (include "common_labels" .) | indent 8 }}
+    spec:
+      tolerations:
+        - key: "iorg-node-reliability-ephemeral-noschedule"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
+      {{- (include "affinity_requirements" .) | indent 6 }}
+      containers:
+        - name: cloud-ws-link-checker
+          image: {{ .Values.link_checker.image }}
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: {{ .Values.link_checker.requests.memory }}
+              cpu: {{ .Values.link_checker.requests.cpu }}
+          env:
+            - name: WS_LINK_CHECKER_JVM_MEMORY_MAX
+              value: {{ .Values.link_checker.requests.memory | lower | trimSuffix "i" | quote }}
+            - name: WS_LINK_CHECKER_CONFIG_REDIS_HOST
+              value: "redis"
+            - name: WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST
+              value: "resolver"
+            # Keep link checking history for only 1.5 days
+            - name: WS_LINK_CHECKER_CONFIG_BACKEND_DATA_LINK_CHECK_RESULTS_TTL_SECONDS
+              value: "129600"
+          ports:
+            - containerPort: {{ .Values.link_checker.port }}
+          readinessProbe:
+            httpGet:
+              path: /healthApi/readiness_check
+              port: {{ .Values.link_checker.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthApi/liveness_check
+              port: {{ .Values.link_checker.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: link-checker
+  labels:
+    tier: api
+    component: link-checker
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.link_checker.port }}
+  selector:
+    tier: api
+    component: link-checker
+    {{- (include "common_labels" .) | indent 4 }}

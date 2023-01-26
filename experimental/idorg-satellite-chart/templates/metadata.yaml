@@ -1,0 +1,93 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metadata
+  labels:
+    app: {{ .Values.app | quote }}
+    deployment: {{ .Values.deployment | quote }}
+    component: metadata
+    tier: api
+spec:
+  selector:
+    matchLabels:
+      tier: api
+      component: metadata
+      {{- (include "common_labels" .) | indent 6 }}
+  replicas: {{ .Values.metadata.replicas }}
+  template:
+    metadata:
+      labels:
+        tier: api
+        component: metadata
+        {{- (include "common_labels" .) | indent 8 }}
+    spec:
+      tolerations:
+        - key: "iorg-node-reliability-ephemeral-noschedule"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
+      {{- (include "affinity_requirements" .) | indent 6 }}
+      containers:
+        - name: cloud-ws-metadata
+          image: {{ .Values.metadata.image }}
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: {{ .Values.metadata.requests.memory }}
+          env:
+            - name: WS_METADATA_CONFIG_RESOLVER_HOST
+              value: "resolver"
+            - name: WS_METADATA_CONFIG_RESOLVER_PORT
+              value: {{ .Values.resolver.port | quote }}
+            - name: WS_METADATA_JVM_MEMORY_MAX
+              value: {{ .Values.metadata.requests.memory | lower | trimSuffix "i" | quote }}
+            - name: WS_METADATA_CONFIG_REDIS_HOST
+              value: "redis"
+          ports:
+            - containerPort: {{ .Values.metadata.port }}
+          readinessProbe:
+            httpGet:
+              path: /healthApi/readiness_check
+              port: {{ .Values.metadata.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthApi/liveness_check
+              port: {{ .Values.metadata.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: metadata
+  labels:
+    tier: api
+    component: metadata
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.metadata.port }}
+  selector:
+    tier: api
+    component: metadata
+    {{- (include "common_labels" .) | indent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodeport-metadata
+  labels:
+    tier: api
+    component: metadata
+    {{- (include "common_labels" .) | indent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.metadata.port }}
+  selector:
+    tier: api
+    component: metadata
+    {{- (include "common_labels" .) | indent 4 }}
+  type: NodePort

@@ -6,8 +6,7 @@ metadata:
   labels:
     tier: api
     component: "resource-recommender"
-    app: {{ .Values.app | quote }}
-    deployment: {{ .Values.deployment | quote }}
+    {{- (include "common_labels" .) | indent 4 }}
 spec:
   selector:
     matchLabels:
@@ -22,11 +21,6 @@ spec:
         component: "resource-recommender"
         {{- (include "common_labels" .) | indent 8}}
     spec:
-      tolerations:
-        - key: "iorg-node-reliability-ephemeral-noschedule"
-          operator: "Equal"
-          value: "true"
-          effect: "NoSchedule"
       {{- (include "affinity_requirements" .) | indent 6 }}
       containers:
         - name: "cloud-ws-resource-recommender"
@@ -47,6 +41,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":false}'
   name: "resource-recommender"
   labels:
     tier: api

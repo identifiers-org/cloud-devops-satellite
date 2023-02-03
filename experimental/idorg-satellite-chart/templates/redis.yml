@@ -4,8 +4,7 @@ kind: Deployment
 metadata:
   name: redis
   labels:
-    app: {{.Values.app | quote}}
-    deployment: {{.Values.deployment | quote}}
+    {{- (include "common_labels" .) | indent 4 }}
     component: redis
     tier: backend
 spec:
@@ -37,6 +36,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":false}'
   name: redis
   labels:
     tier: backend

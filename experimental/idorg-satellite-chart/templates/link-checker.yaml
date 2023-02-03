@@ -4,8 +4,7 @@ kind: Deployment
 metadata:
   name: link-checker
   labels:
-    app: {{ .Values.app | quote }}
-    deployment: {{ .Values.deployment | quote }}
+    {{- (include "common_labels" .) | indent 4 }}
     component: link-checker
     tier: api
 spec:
@@ -22,11 +21,6 @@ spec:
         component: link-checker
         {{- (include "common_labels" .) | indent 8 }}
     spec:
-      tolerations:
-        - key: "iorg-node-reliability-ephemeral-noschedule"
-          operator: "Equal"
-          value: "true"
-          effect: "NoSchedule"
       {{- (include "affinity_requirements" .) | indent 6 }}
       containers:
         - name: cloud-ws-link-checker
@@ -64,6 +58,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":false}'
   name: link-checker
   labels:
     tier: api

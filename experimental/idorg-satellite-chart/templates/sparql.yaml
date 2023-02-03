@@ -4,8 +4,7 @@ kind: Deployment
 metadata:
   name: sparql
   labels:
-    app: {{ .Values.app | quote }}
-    deployment: {{ .Values.deployment | quote }}
+    {{- (include "common_labels" .) | indent 4 }}
     component: sparql
     tier: api
 spec:
@@ -22,11 +21,6 @@ spec:
         component: sparql
         {{- (include "common_labels" .) | indent 8 }}
     spec:
-      tolerations:
-        - key: "iorg-node-reliability-ephemeral-noschedule"
-          operator: "Equal"
-          value: "true"
-          effect: "NoSchedule"
       {{- (include "affinity_requirements" .) | indent 6 }}
       containers:
         - name: sparql-identifiers
@@ -42,6 +36,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":false}'
   name: sparql
   labels:
     tier: api

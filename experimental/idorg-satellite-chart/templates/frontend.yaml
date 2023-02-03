@@ -4,8 +4,7 @@ kind: Deployment
 metadata:
   name: web-satellite
   labels:
-    app: {{.Values.app | quote}}
-    deployment: {{.Values.deployment | quote}}
+    {{- (include "common_labels" .) | indent 4 }}
     component: redis
     tier: backend
 spec:
@@ -22,11 +21,6 @@ spec:
         component: web-satellite
         {{- (include "common_labels" .) | indent 8 }}
     spec:
-      tolerations:
-        - key: "iorg-node-reliability-ephemeral-noschedule"
-          operator: "Equal"
-          value: "true"
-          effect: "NoSchedule"
       {{- (include "affinity_requirements" .) | indent 6 }}
       containers:
         - name: cloud-web-frontend

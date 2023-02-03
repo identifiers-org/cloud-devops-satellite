@@ -4,6 +4,7 @@ deployment: satellite
 environment: staging
 
 ingress: #This assumes google cloud ingress
+  enabled: true
   static_ip_name: idorg-satellite
   allow_http: true
   pre_shared_cert: 'cert-iorg-sat-prod-metadata,cert-iorg-sat-prod-resolver,cert-iorg-sat-prod-sparql,cert-iorg-sat-prod-web,cert-iorg-sat-prod-web-main2'
@@ -43,14 +44,19 @@ metadata:
   replicas: 1
   port: 8082
   requests:
+    cpu: 100m
     memory: 640Mi
 
 resolver:
-  image: "identifiersorg/cloud-ws-resolver:2.2.6"
+  image: "identifiersorg/cloud-ws-resolver:2.2.8"
   replicas: 2
   port: 8080
   url: "https://resolver.api.identifiers.org"
   cors_origins: "http://cloud.identifiers.org,https://cloud.identifiers.org,http://cloud.aws.identifiers.org,https://cloud.aws.identifiers.org,http://cloud.gcloud.identifiers.org,https://cloud.gcloud.identifiers.org,http://identifiers.org,https://identifiers.org"
+  matomo:
+    enabled: true
+    auth_token: ~
+    baseUrl: "https://matomo.identifiers.org"
   requests:
     memory: 360Mi
     cpu: 100m
@@ -68,8 +74,11 @@ registry:
   url: "https://registry.identifiers.org"
   api_url: "https://registry.api.identifiers.org"
   registration_url: "https://registry.identifiers.org/prefixregistrationrequest"
+#  dataset_url: "http://registry.hq.svc.cluster.local:8180/resolutionApi/getResolverDataset"
   dataset_url: "https://registry.api.identifiers.org/resolutionApi/getResolverDataset"
 
 nodeAffinityRequirements:
-  - label: iorg-node-reliability
+  - label: idorg-node-reliability
     value: stable
+  - label: idorg-deployment
+    value: satellite

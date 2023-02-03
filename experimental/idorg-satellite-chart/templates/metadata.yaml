@@ -4,8 +4,7 @@ kind: Deployment
 metadata:
   name: metadata
   labels:
-    app: {{ .Values.app | quote }}
-    deployment: {{ .Values.deployment | quote }}
+    {{- (include "common_labels" .) | indent 4 }}
     component: metadata
     tier: api
 spec:
@@ -22,11 +21,6 @@ spec:
         component: metadata
         {{- (include "common_labels" .) | indent 8 }}
     spec:
-      tolerations:
-        - key: "iorg-node-reliability-ephemeral-noschedule"
-          operator: "Equal"
-          value: "true"
-          effect: "NoSchedule"
       {{- (include "affinity_requirements" .) | indent 6 }}
       containers:
         - name: cloud-ws-metadata
@@ -35,6 +29,7 @@ spec:
           resources:
             requests:
               memory: {{ .Values.metadata.requests.memory }}
+              cpu: {{ .Values.metadata.requests.cpu }}
           env:
             - name: WS_METADATA_CONFIG_RESOLVER_HOST
               value: "resolver"
@@ -62,6 +57,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    cloud.google.com/neg: '{"ingress":false}'
   name: metadata
   labels:
     tier: api

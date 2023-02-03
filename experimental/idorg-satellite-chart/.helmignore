@@ -21,4 +21,6 @@
 .idea/
 *.tmproj
 .vscode/
-myvals.yaml
+
+staging.yaml
+production.yaml

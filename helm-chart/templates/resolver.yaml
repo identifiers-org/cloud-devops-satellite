@@ -46,11 +46,11 @@ spec:
             - name: WS_RESOLVER_JVM_MEMORY_MAX
               value: {{ .Values.resolver.requests.memory | lower | trimSuffix "i" | quote }}
             - name: MATOMO_ENABLED
-              value: {{ .Values.resolver.matomo.enabled | quote }}
+              value: {{ .Values.matomo.enabled | quote }}
             - name: MATOMO_BASE_URL
-              value: {{ .Values.resolver.matomo.baseUrl | quote }}
+              value: {{ .Values.matomo.baseUrl | quote }}
             - name: MATOMO_AUTH_TOKEN
-              value: {{ .Values.resolver.matomo.auth_token | default "" | quote }}
+              value: {{ .Values.matomo.auth_token | default "" | quote }}
           ports:
             - containerPort: {{ .Values.resolver.port }}
           readinessProbe:

@@ -63,7 +63,7 @@ matomo:
   baseUrl: "https://matomo.identifiers.org/matomo.php"
 
 frontend:
-  image: "identifiersorg/cloud-satellite-web-spa:1.0.0"
+  image: "identifiersorg/cloud-satellite-web-spa:1.0.1"
   replicas: 2
   cors_origins: "http://identifiers.org,https://identifiers.org,http://cloud.identifiers.org,https://cloud.identifiers.org"
   port: 9090

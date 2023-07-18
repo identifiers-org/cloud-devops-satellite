@@ -51,17 +51,21 @@ spec:
               value: {{ .Values.matomo.baseUrl | quote }}
             - name: MATOMO_AUTH_TOKEN
               value: {{ .Values.matomo.auth_token | default "" | quote }}
+            - name: WS_RESOLVER_CONFIG_BACKEND_REQUIRED_ROLE
+              value: {{ .Values.actuator_auth.role | default "" | quote }}
+            - name: WS_RESOLVER_CONFIG_BACKEND_SERVICE_JWT_ISSUERURI
+              value: {{ .Values.actuator_auth.issuer_uri | required "Set a authenticator provider!" | quote }}
           ports:
             - containerPort: {{ .Values.resolver.port }}
           readinessProbe:
             httpGet:
-              path: /healthApi/readiness_check
+              path: /actuator/health
               port: {{ .Values.resolver.port }}
             initialDelaySeconds: 5
             periodSeconds: 10
           livenessProbe:
             httpGet:
-              path: /healthApi/liveness_check
+              path: /actuator/health
               port: {{ .Values.resolver.port }}
             initialDelaySeconds: 5
             periodSeconds: 10

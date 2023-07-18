@@ -3,6 +3,11 @@ app: idorg
 deployment: satellite
 environment: staging
 
+actuator_auth:
+  role: chad
+  issuer_uri: ~
+
+
 ingress: #This assumes google cloud ingress
   enabled: true
   static_ip_name: idorg-satellite
@@ -48,7 +53,7 @@ metadata:
     memory: 640Mi
 
 resolver:
-  image: "identifiersorg/cloud-ws-resolver:2.3.0"
+  image: "identifiersorg/cloud-ws-resolver:2.4.0"
   replicas: 2
   port: 8080
   url: "https://resolver.api.identifiers.org"

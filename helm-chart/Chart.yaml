@@ -2,7 +2,7 @@ apiVersion: v2
 name: idorg-satellite
 description: Umbrella chart for the satellite deployment of identifiers.org. This is replicable in order to make resolving scalable.
 type: application
-version: 1.1.0
+version: 1.2.0
 home: "http://identifiers.org"
 sources:
   - "https://github.com/identifiers-org"

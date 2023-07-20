@@ -2,9 +2,10 @@
 app: idorg
 deployment: satellite
 environment: staging
+active_profiles: authenabled
 
 actuator_auth:
-  role: chad
+  role: ~
   issuer_uri: ~
 
 
@@ -29,7 +30,7 @@ sparql:
   port: 8080
 
 resource_recommender:
-  image: "identifiersorg/cloud-ws-resource-recommender:1.3.2"
+  image: "identifiersorg/cloud-ws-resource-recommender:1.4.0"
   replicas: 2
   port: 8083
   requests:
@@ -37,7 +38,7 @@ resource_recommender:
     cpu: 150m
 
 link_checker:
-  image: "identifiersorg/cloud-ws-link-checker:1.3.3"
+  image: "identifiersorg/cloud-ws-link-checker:1.4.0"
   replicas: 1
   requests:
     memory: 440Mi
@@ -68,7 +69,7 @@ matomo:
   baseUrl: "https://matomo.identifiers.org/matomo.php"
 
 frontend:
-  image: "identifiersorg/cloud-satellite-web-spa:1.0.1"
+  image: "identifiersorg/cloud-satellite-web-spa:1.1.0"
   replicas: 2
   cors_origins: "http://identifiers.org,https://identifiers.org,http://cloud.identifiers.org,https://cloud.identifiers.org"
   port: 9090

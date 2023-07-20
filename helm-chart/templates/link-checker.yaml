@@ -40,17 +40,23 @@ spec:
             # Keep link checking history for only 1.5 days
             - name: WS_LINK_CHECKER_CONFIG_BACKEND_DATA_LINK_CHECK_RESULTS_TTL_SECONDS
               value: "129600"
+            - name: WS_LINK_CHECKER_CONFIG_BACKEND_REQUIRED_ROLE
+              value: {{ .Values.actuator_auth.role }}
+            - name: WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_JWT_ISSUERURI
+              value: {{ .Values.actuator_auth.issuer_uri }}
+            - name: SPRING_PROFILES_ACTIVE
+              value: {{ .Values.active_profiles }}
           ports:
             - containerPort: {{ .Values.link_checker.port }}
           readinessProbe:
             httpGet:
-              path: /healthApi/readiness_check
+              path: /actuator/health
               port: {{ .Values.link_checker.port }}
             initialDelaySeconds: 5
             periodSeconds: 10
           livenessProbe:
             httpGet:
-              path: /healthApi/liveness_check
+              path: /actuator/health
               port: {{ .Values.link_checker.port }}
             initialDelaySeconds: 5
             periodSeconds: 10

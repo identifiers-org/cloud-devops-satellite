@@ -55,6 +55,8 @@ spec:
               value: {{ .Values.actuator_auth.role | default "" | quote }}
             - name: WS_RESOLVER_CONFIG_BACKEND_SERVICE_JWT_ISSUERURI
               value: {{ .Values.actuator_auth.issuer_uri | required "Set a authenticator provider!" | quote }}
+            - name: SPRING_PROFILES_ACTIVE
+              value: {{ .Values.active_profiles }}
           ports:
             - containerPort: {{ .Values.resolver.port }}
           readinessProbe:

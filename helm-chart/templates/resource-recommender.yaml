@@ -35,6 +35,12 @@ spec:
               value: {{ .Values.resource_recommender.requests.memory | lower | trimSuffix "i" | quote }}
             - name: WS_RESOURCE_RECOMMENDER_CONFIG_BACKEND_SERVICE_LINK_CHECKER_HOST
               value: link-checker
+            - name: SPRING_PROFILES_ACTIVE
+              value: {{ .Values.active_profiles }}
+            - name: WS_RESOURCE_RECOMMENDER_CONFIG_REQUIRED_ROLE
+              value: {{ .Values.actuator_auth.role }}
+            - name: WS_RESOURCE_RECOMMENDER_CONFIG_BACKEND_SERVICE_JWT_ISSUERURI
+              value: {{ .Values.actuator_auth.issuer_uri }}
           ports:
             - containerPort: {{ .Values.resource_recommender.port }}
 ---

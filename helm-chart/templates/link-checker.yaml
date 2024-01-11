@@ -38,8 +38,8 @@ spec:
             - name: WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_RESOLVER_HOST
               value: "resolver"
             # Keep link checking history for only 1.5 days
-            - name: WS_LINK_CHECKER_CONFIG_BACKEND_DATA_LINK_CHECK_RESULTS_TTL_SECONDS
-              value: "129600"
+            - name: WS_LINK_CHECKER_CONFIG_BACKEND_DATA_LINK_CHECK_RESULTS_TTL
+              value: "36h"
             - name: WS_LINK_CHECKER_CONFIG_BACKEND_REQUIRED_ROLE
               value: {{ .Values.actuator_auth.role }}
             - name: WS_LINK_CHECKER_CONFIG_BACKEND_SERVICE_JWT_ISSUERURI
@@ -52,14 +52,18 @@ spec:
             httpGet:
               path: /actuator/health
               port: {{ .Values.link_checker.port }}
-            initialDelaySeconds: 5
-            periodSeconds: 10
+            initialDelaySeconds: 45
+            periodSeconds: 30
+            timeoutSeconds: 25
+            failureThreshold: 1
           livenessProbe:
             httpGet:
               path: /actuator/health
               port: {{ .Values.link_checker.port }}
-            initialDelaySeconds: 5
-            periodSeconds: 10
+            initialDelaySeconds: 90
+            periodSeconds: 30
+            timeoutSeconds: 25
+            failureThreshold: 3
 ---
 apiVersion: v1
 kind: Service

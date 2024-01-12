@@ -46,7 +46,7 @@ link_checker:
   port: 8084
 
 metadata:
-  image: "identifiersorg/cloud-ws-metadata:1.4.3"
+  image: "identifiersorg/cloud-ws-metadata:2.0.0"
   replicas: 1
   port: 8082
   requests:

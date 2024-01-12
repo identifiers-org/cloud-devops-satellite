@@ -39,21 +39,27 @@ spec:
               value: {{ .Values.metadata.requests.memory | lower | trimSuffix "i" | quote }}
             - name: WS_METADATA_CONFIG_REDIS_HOST
               value: "redis"
+            - name: WS_METADATA_CONFIG_BACKEND_REQUIRED_ROLE
+              value: {{ .Values.actuator_auth.role }}
+            - name: WS_METADATA_CONFIG_BACKEND_SERVICE_JWT_ISSUERURI
+              value: {{ .Values.actuator_auth.issuer_uri }}
+            - name: SPRING_PROFILES_ACTIVE
+              value: {{ .Values.active_profiles }}
           ports:
             - containerPort: {{ .Values.metadata.port }}
           readinessProbe:
             httpGet:
-              path: /healthApi/readiness_check
+              path: /actuator/health/readiness
               port: {{ .Values.metadata.port }}
-            initialDelaySeconds: 45
+            initialDelaySeconds: 10
             periodSeconds: 30
             timeoutSeconds: 25
             failureThreshold: 3
           livenessProbe:
             httpGet:
-              path: /healthApi/liveness_check
+              path: /actuator/health/liveness
               port: {{ .Values.metadata.port }}
-            initialDelaySeconds: 90
+            initialDelaySeconds: 20
             periodSeconds: 30
             timeoutSeconds: 25
             failureThreshold: 3

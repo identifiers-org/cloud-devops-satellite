@@ -30,7 +30,7 @@ sparql:
   port: 8080
 
 resource_recommender:
-  image: "identifiersorg/cloud-ws-resource-recommender:2.0.0"
+  image: "identifiersorg/cloud-ws-resource-recommender:2.0.1"
   replicas: 2
   port: 8083
   requests:

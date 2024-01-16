@@ -54,7 +54,7 @@ metadata:
     memory: 640Mi
 
 resolver:
-  image: "identifiersorg/cloud-ws-resolver:2.5.0"
+  image: "identifiersorg/cloud-ws-resolver:3.0.1"
   replicas: 2
   port: 8080
   url: "https://resolver.api.identifiers.org"

@@ -61,13 +61,13 @@ spec:
             - containerPort: {{ .Values.resolver.port }}
           readinessProbe:
             httpGet:
-              path: /actuator/health
+              path: /actuator/health/readiness
               port: {{ .Values.resolver.port }}
             initialDelaySeconds: 5
             periodSeconds: 10
           livenessProbe:
             httpGet:
-              path: /actuator/health
+              path: /actuator/health/liveness
               port: {{ .Values.resolver.port }}
             initialDelaySeconds: 5
             periodSeconds: 10

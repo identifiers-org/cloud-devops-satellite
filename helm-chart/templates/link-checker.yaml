@@ -46,6 +46,10 @@ spec:
               value: {{ .Values.actuator_auth.issuer_uri }}
             - name: SPRING_PROFILES_ACTIVE
               value: {{ .Values.active_profiles }}
+            {{- range $key, $val := .Values.link_checker.env }}
+            - name: {{ $key }}
+              value: {{ $val | quote }}
+            {{- end}}
           ports:
             - containerPort: {{ .Values.link_checker.port }}
           readinessProbe:

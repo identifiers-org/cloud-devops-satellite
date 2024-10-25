@@ -16,7 +16,7 @@ ingress: #This assumes google cloud ingress
   pre_shared_cert: 'cert-iorg-sat-prod-metadata,cert-iorg-sat-prod-resolver,cert-iorg-sat-prod-sparql,cert-iorg-sat-prod-web,cert-iorg-sat-prod-web-main2'
 
 redis:
-  image: "redis:7.0-alpine"
+  image: "redis:7.4-alpine"
   requests:
     memory: 1280Mi
     cpu: 150m
@@ -38,7 +38,7 @@ resource_recommender:
     cpu: 150m
 
 link_checker:
-  image: "identifiersorg/cloud-ws-link-checker:2.0.1"
+  image: "identifiersorg/cloud-ws-link-checker:2.1.4"
   replicas: 1
   requests:
     memory: 440Mi
@@ -54,8 +54,8 @@ metadata:
     memory: 640Mi
 
 resolver:
-  image: "identifiersorg/cloud-ws-resolver:3.0.3"
-  replicas: 2
+  image: "identifiersorg/cloud-ws-resolver:3.0.4"
+  replicas: 3
   port: 8080
   url: "https://resolver.api.identifiers.org"
   cors_origins: "*"
@@ -69,8 +69,8 @@ matomo:
   baseUrl: "https://matomo.identifiers.org/matomo.php"
 
 frontend:
-  image: "identifiersorg/cloud-satellite-web-spa:2.0.1"
-  replicas: 2
+  image: "identifiersorg/cloud-satellite-web-spa:2.0.6"
+  replicas: 3
   cors_origins: "*"
   port: 9090
   requests:

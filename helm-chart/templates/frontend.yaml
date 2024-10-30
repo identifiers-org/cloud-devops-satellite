@@ -2,26 +2,59 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: web-satellite
+  name: {{ .Values.frontend.component }}
   labels:
     {{- (include "common_labels" .) | indent 4 }}
-    component: redis
-    tier: backend
+    component: {{ .Values.frontend.component }}
+    tier: {{ .Values.frontend.tier }}
 spec:
   selector:
     matchLabels:
-      tier: frontend
-      component: web-satellite
+      tier: {{ .Values.frontend.tier }}
+      component: {{ .Values.frontend.component }}
       {{- (include "common_labels" .) | indent 6 }}
   replicas: {{ .Values.frontend.replicas }}
   template:
     metadata:
       labels:
-        tier: frontend
-        component: web-satellite
+        tier: {{ .Values.frontend.tier }}
+        component: {{ .Values.frontend.component }}
         {{- (include "common_labels" .) | indent 8 }}
     spec:
-      {{- (include "affinity_requirements" .) | indent 6 }}
+      affinity:
+        {{- (include "node_affinity_requirements" .) | indent 8 }}
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 70
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    {{- (include "common_label_match_expressions" .) | indent 20}}
+                    - key: tier
+                      operator: In
+                      values:
+                        - {{ .Values.resolver.tier }}
+                    - key: component
+                      operator: In
+                      values:
+                        - {{ .Values.resolver.component }}
+                topologyKey: "kubernetes.io/hostname"
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    {{- (include "common_label_match_expressions" .) | indent 20}}
+                    - key: tier
+                      operator: In
+                      values:
+                        - {{ .Values.frontend.tier }}
+                    - key: component
+                      operator: In
+                      values:
+                        - {{ .Values.frontend.component }}
+                topologyKey: "kubernetes.io/hostname"
       containers:
         - name: cloud-web-frontend
           image: {{ .Values.frontend.image }}
@@ -58,7 +91,10 @@ spec:
             - name: MATOMO_BASE_URL
               value: {{ .Values.matomo.baseUrl | quote }}
             - name: MATOMO_AUTH_TOKEN
-              value: {{ .Values.matomo.auth_token | default "" | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: matomo-credentials
+                  key: auth_token
           ports:
             - containerPort: {{ .Values.frontend.port }}
           readinessProbe:
@@ -77,18 +113,18 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nodeport-web-satellite
+  name: nodeport-{{ .Values.frontend.component }}
   labels:
-    tier: frontend
-    component: web-satellite
+    tier: {{ .Values.frontend.tier }}
+    component: {{ .Values.frontend.component }}
     {{- (include "common_labels" .) | indent 4 }}
 spec:
   ports:
     - port: 80
       targetPort: {{ .Values.frontend.port }}
   selector:
-    tier: frontend
-    component: web-satellite
+    tier: {{ .Values.frontend.tier }}
+    component: {{ .Values.frontend.component }}
     {{- (include "common_labels" .) | indent 4 }}
   type: NodePort
 ---

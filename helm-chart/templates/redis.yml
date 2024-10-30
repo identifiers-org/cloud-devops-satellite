@@ -5,23 +5,24 @@ metadata:
   name: redis
   labels:
     {{- (include "common_labels" .) | indent 4 }}
-    component: redis
-    tier: backend
+    component: {{ .Values.redis.component }}
+    tier: {{ .Values.redis.tier }}
 spec:
   selector:
     matchLabels:
-      tier: backend
-      component: redis
+      tier: {{ .Values.redis.tier }}
+      component: {{ .Values.redis.component }}
       {{- (include "common_labels" .) | indent 6 }}
   replicas: 1 #This cannot be more than 1 to prevent resolvers to use different datasets
   template:
     metadata:
       labels:
-        tier: backend
-        component: redis
+        tier: {{ .Values.redis.tier }}
+        component: {{ .Values.redis.component }}
         {{- (include "common_labels" .) | indent 8 }}
     spec:
-      {{- (include "affinity_requirements" .) | indent 6 }}
+      affinity:
+        {{- (include "node_affinity_requirements" .) | indent 8 }}
       containers:
         - name: redis
           image: {{ .Values.redis.image }}
@@ -38,16 +39,16 @@ kind: Service
 metadata:
   annotations:
     cloud.google.com/neg: '{"ingress":false}'
-  name: redis
+  name: {{ .Values.redis.component }}
   labels:
-    tier: backend
-    component: redis
+    tier: {{ .Values.redis.tier }}
+    component: {{ .Values.redis.component }}
     {{- (include "common_labels" .) | indent 4 }}
 spec:
   ports:
     - port: 6379
   selector:
-    tier: backend
-    component: redis
+    tier: {{ .Values.redis.tier }}
+    component: {{ .Values.redis.component }}
     {{- (include "common_labels" .) | indent 4 }}
 ---

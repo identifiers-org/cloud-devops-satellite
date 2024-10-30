@@ -21,7 +21,7 @@ spec:
           - pathType: ImplementationSpecific
             backend:
               service:
-                name: nodeport-resolver
+                name: nodeport-{{ .Values.resolver.component }}
                 port:
                   number: {{ .Values.resolver.port }}
     # Sparql rules
@@ -31,7 +31,7 @@ spec:
           - pathType: ImplementationSpecific
             backend:
               service:
-                name: nodeport-sparql
+                name: nodeport-{{ .Values.sparql.component }}
                 port:
                   number: {{ .Values.sparql.port }}
     # Metadata Service rules
@@ -41,7 +41,7 @@ spec:
           - pathType: ImplementationSpecific
             backend:
               service:
-                name: nodeport-metadata
+                name: nodeport-{{ .Values.metadata.component }}
                 port:
                   number: {{ .Values.metadata.port }}
     # Web Frontend rules
@@ -51,7 +51,7 @@ spec:
           - pathType: ImplementationSpecific
             backend:
               service:
-                name: nodeport-web-satellite
+                name: nodeport-{{ .Values.frontend.component }}
                 port:
                   number: 80
     - host: identifiers.org
@@ -60,7 +60,7 @@ spec:
           - pathType: ImplementationSpecific
             backend:
               service:
-                name: nodeport-web-satellite
+                name: nodeport-{{ .Values.frontend.component }}
                 port:
                   number: 80
     - host: www.identifiers.org

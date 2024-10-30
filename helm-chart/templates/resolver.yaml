@@ -2,26 +2,73 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: resolver
+  name: {{ .Values.resolver.component }}
   labels:
     {{- (include "common_labels" .) | indent 4 }}
-    component: resolver
-    tier: api
+    component: {{ .Values.resolver.component }}
+    tier: {{ .Values.resolver.tier }}
 spec:
   selector:
     matchLabels:
-      tier: api
-      component: resolver
+      tier: {{ .Values.resolver.tier }}
+      component: {{ .Values.resolver.component }}
       {{- (include "common_labels" .) | indent 6 }}
   replicas: {{ .Values.resolver.replicas }}
   template:
     metadata:
       labels:
-        tier: api
-        component: resolver
+        tier: {{ .Values.resolver.tier }}
+        component: {{ .Values.resolver.component }}
         {{- (include "common_labels" .) | indent 8 }}
     spec:
-      {{- (include "affinity_requirements" .) | indent 6 }}
+      affinity:
+        {{- (include "node_affinity_requirements" .) | indent 8 }}
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 70
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    {{- (include "common_label_match_expressions" .) | indent 20 }}
+                    - key: tier
+                      operator: In
+                      values:
+                        - {{ .Values.redis.tier }}
+                    - key: component
+                      operator: In
+                      values:
+                        - {{ .Values.redis.component }}
+                topologyKey: "kubernetes.io/hostname"
+            - weight: 20
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    {{- (include "common_label_match_expressions" .) | indent 20 }}
+                    - key: tier
+                      operator: In
+                      values:
+                        - {{ .Values.resource_recommender.tier }}
+                    - key: component
+                      operator: In
+                      values:
+                        - {{ .Values.resource_recommender.component }}
+                topologyKey: "kubernetes.io/hostname"
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    {{- (include "common_label_match_expressions" .) | indent 20}}
+                    - key: tier
+                      operator: In
+                      values:
+                        - {{ .Values.resolver.tier }}
+                    - key: component
+                      operator: In
+                      values:
+                        - {{ .Values.resolver.component }}
+                topologyKey: "kubernetes.io/hostname"
       containers:
         - name: cloud-ws-resolver
           image: {{ .Values.resolver.image }}
@@ -50,7 +97,10 @@ spec:
             - name: MATOMO_BASE_URL
               value: {{ .Values.matomo.baseUrl | quote }}
             - name: MATOMO_AUTH_TOKEN
-              value: {{ .Values.matomo.auth_token | default "" | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: matomo-credentials
+                  key: auth_token
             - name: WS_RESOLVER_CONFIG_BACKEND_REQUIRED_ROLE
               value: {{ .Values.actuator_auth.role | default "" | quote }}
             - name: WS_RESOLVER_CONFIG_BACKEND_SERVICE_JWT_ISSUERURI
@@ -77,33 +127,33 @@ kind: Service
 metadata:
   annotations:
     cloud.google.com/neg: '{"ingress":false}'
-  name: resolver
+  name: {{ .Values.resolver.component }}
   labels:
-    tier: api
-    component: resolver
+    tier: {{ .Values.resolver.tier}}
+    component: {{ .Values.resolver.component }}
     {{- (include "common_labels" .) | indent 4 }}
 spec:
   ports:
     - port: {{ .Values.resolver.port }}
   selector:
-    tier: api
-    component: resolver
+    tier: {{ .Values.resolver.tier}}
+    component: {{ .Values.resolver.component }}
     {{- (include "common_labels" .) | indent 4 }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: nodeport-resolver
+  name: nodeport-{{ .Values.resolver.component }}
   labels:
-    tier: api
-    component: resolver
+    tier: {{ .Values.resolver.tier}}
+    component: {{ .Values.resolver.component }}
     {{- (include "common_labels" .) | indent 4 }}
 spec:
   ports:
     - port: {{ .Values.resolver.port }}
   selector:
-    tier: api
-    component: resolver
+    tier: {{ .Values.resolver.tier}}
+    component: {{ .Values.resolver.component }}
     {{- (include "common_labels" .) | indent 4 }}
   type: NodePort
 ---

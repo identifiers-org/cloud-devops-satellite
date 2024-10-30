@@ -2,26 +2,43 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sparql
+  name: {{ .Values.sparql.component }}
   labels:
     {{- (include "common_labels" .) | indent 4 }}
-    component: sparql
-    tier: api
+    component: {{ .Values.sparql.component }}
+    tier: {{ .Values.sparql.tier }}
 spec:
   selector:
     matchLabels:
-      tier: api
-      component: sparql
+      tier: {{ .Values.sparql.tier }}
+      component: {{ .Values.sparql.component }}
       {{- (include "common_labels" .) | indent 6 }}
   replicas: {{ .Values.sparql.replicas }}
   template:
     metadata:
       labels:
-        tier: api
-        component: sparql
+        tier: {{ .Values.sparql.tier }}
+        component: {{ .Values.sparql.component }}
         {{- (include "common_labels" .) | indent 8 }}
     spec:
-      {{- (include "affinity_requirements" .) | indent 6 }}
+      affinity:
+        {{- (include "node_affinity_requirements" .) | indent 8 }}
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    {{- (include "common_label_match_expressions" .) | indent 20}}
+                    - key: tier
+                      operator: In
+                      values:
+                        - {{ .Values.sparql.tier }}
+                    - key: component
+                      operator: In
+                      values:
+                        - {{ .Values.sparql.component }}
+                topologyKey: "kubernetes.io/hostname"
       containers:
         - name: sparql-identifiers
           image: {{ .Values.sparql.image }}
@@ -38,33 +55,33 @@ kind: Service
 metadata:
   annotations:
     cloud.google.com/neg: '{"ingress":false}'
-  name: sparql
+  name: {{ .Values.sparql.component }}
   labels:
-    tier: api
-    component: sparql
+    tier: {{ .Values.sparql.tier }}
+    component: {{ .Values.sparql.component }}
     {{- (include "common_labels" .) | indent 4 }}
 spec:
   ports:
     - port: {{ .Values.sparql.port }}
   selector:
-    tier: api
-    component: sparql
+    tier: {{ .Values.sparql.tier }}
+    component: {{ .Values.sparql.component }}
     {{- (include "common_labels" .) | indent 4 }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: nodeport-sparql
+  name: nodeport-{{ .Values.sparql.component }}
   labels:
-    tier: api
-    component: sparql
+    tier: {{ .Values.sparql.tier }}
+    component: {{ .Values.sparql.component }}
     {{- (include "common_labels" .) | indent 4 }}
 spec:
   ports:
     - port: {{ .Values.sparql.port }}
   selector:
-    tier: api
-    component: sparql
+    tier: {{ .Values.sparql.tier }}
+    component: {{ .Values.sparql.component }}
     {{- (include "common_labels" .) | indent 4 }}
   type: NodePort
 ---

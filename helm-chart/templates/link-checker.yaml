@@ -63,6 +63,8 @@ spec:
             requests:
               memory: {{ .Values.link_checker.requests.memory }}
               cpu: {{ .Values.link_checker.requests.cpu }}
+            limits:
+              cpu: {{ .Values.link_checker.limits.cpu }}
           env:
             - name: WS_LINK_CHECKER_JVM_MEMORY_MAX
               value: {{ .Values.link_checker.requests.memory | lower | trimSuffix "i" | quote }}
